@@ -1,0 +1,718 @@
+[
+    {
+      "word_english": "Apple",
+      "word_spanish": "Manzana",
+      "meaning_english": "a round fruit with red or green skin and a whitish interior",
+      "meaning_spanish": "una fruta redonda con piel roja o verde y un interior blanquecino",
+      "example_english": "I like to eat an apple every day.",
+      "example_spanish": "Me gusta comer una manzana todos los días.",
+      "course_id": 14
+    },
+    {
+      "word_english": "Book",
+      "word_spanish": "Libro",
+      "meaning_english": "a written or printed work consisting of pages glued or sewn together along one side and bound in covers",
+      "meaning_spanish": "una obra escrita o impresa que consiste en páginas pegadas o cosidas a lo largo de un lado y encuadernadas en cubiertas",
+      "example_english": "I enjoy reading a good book before going to bed.",
+      "example_spanish": "Disfruto leyendo un buen libro antes de ir a dormir.",
+      "course_id": 14
+    },
+    {
+      "word_english": "Cat",
+      "word_spanish": "Gato",
+      "meaning_english": "a small domesticated carnivorous mammal with soft fur, a short snout, and retractile claws",
+      "meaning_spanish": "un pequeño mamífero carnívoro domesticado con pelaje suave, un hocico corto y garras retráctiles",
+      "example_english": "My cat loves to chase mice.",
+      "example_spanish": "A mi gato le encanta perseguir ratones.",
+      "course_id": 14
+    },
+    {
+      "word_english": "Dog",
+      "word_spanish": "Perro",
+      "meaning_english": "a domesticated carnivorous mammal that typically has a long snout, an acute sense of smell, nonretractile claws, and a barking, howling, or whining voice",
+      "meaning_spanish": "un mamífero carnívoro doméstico que típicamente tiene un hocico largo, un agudo sentido del olfato, garras no retráctiles y una voz de ladrido, aullido o quejido",
+      "example_english": "I take my dog for a walk every morning.",
+      "example_spanish": "Paseo a mi perro todas las mañanas.",
+      "course_id": 14
+    },
+    {
+      "word_english": "Elephant",
+      "word_spanish": "Elefante",
+      "meaning_english": "a very large herbivorous mammal with a trunk and large tusks, native to Africa and parts of Asia",
+      "meaning_spanish": "un mamífero herbívoro muy grande con una trompa y grandes colmillos, nativo de África y partes de Asia",
+      "example_english": "Elephants are known for their intelligence and memory.",
+      "example_spanish": "Los elefantes son conocidos por su inteligencia y memoria.",
+      "course_id": 14
+    },
+    {
+      "word_english": "Friend",
+      "word_spanish": "Amigo",
+      "meaning_english": "a person whom one knows and with whom one has a bond of mutual affection",
+      "meaning_spanish": "una persona a quien se conoce y con quien se tiene un vínculo de afecto mutuo",
+      "example_english": "I consider him my best friend.",
+      "example_spanish": "Lo considero mi mejor amigo.",
+      "course_id": 14
+    },
+    {
+      "word_english": "Green",
+      "word_spanish": "Verde",
+      "meaning_english": "of the color between blue and yellow in the spectrum; colored like grass or emeralds",
+      "meaning_spanish": "del color entre azul y amarillo en el espectro; de color como la hierba o los esmeraldas",
+      "example_english": "The leaves turn green in spring.",
+      "example_spanish": "Las hojas se vuelven verdes en primavera.",
+      "course_id": 14
+    },
+    {
+      "word_english": "House",
+      "word_spanish": "Casa",
+      "meaning_english": "a building for human habitation, especially one that is lived in by a family or small group of people",
+      "meaning_spanish": "un edificio para la habitación humana, especialmente uno que es habitado por una familia o un pequeño grupo de personas",
+      "example_english": "Our house has a beautiful garden.",
+      "example_spanish": "Nuestra casa tiene un hermoso jardín.",
+      "course_id": 14
+    },
+    {
+      "word_english": "Ice cream",
+      "word_spanish": "Helado",
+      "meaning_english": "a sweet frozen food typically eaten as a snack or dessert",
+      "meaning_spanish": "un alimento dulce congelado típicamente comido como refrigerio o postre",
+      "example_english": "I love to eat ice cream on hot summer days.",
+      "example_spanish": "Me encanta comer helado en los días calurosos de verano.",
+      "course_id": 14
+    },
+    {
+      "word_english": "Juice",
+      "word_spanish": "Jugo",
+      "meaning_english": "the liquid obtained from or present in fruit or vegetables",
+      "meaning_spanish": "el líquido obtenido de o presente en frutas o verduras",
+      "example_english": "Orange juice is my favorite.",
+      "example_spanish": "El jugo de naranja es mi favorito.",
+      "course_id": 14
+    },
+    {
+      "word_english": "King",
+      "word_spanish": "Rey",
+      "meaning_english": "the male ruler of an independent state, especially one who inherits the position by right of birth",
+      "meaning_spanish": "el gobernante masculino de un estado independiente, especialmente aquel que hereda el cargo por derecho de nacimiento",
+      "example_english": "The king wore a golden crown.",
+      "example_spanish": "El rey llevaba una corona dorada.",
+      "course_id": 14
+    },
+    {
+      "word_english": "Love",
+      "word_spanish": "Amor",
+      "meaning_english": "an intense feeling of deep affection",
+      "meaning_spanish": "un sentimiento intenso de profundo afecto",
+      "example_english": "I love spending time with my family.",
+      "example_spanish": "Amo pasar tiempo con mi familia.",
+      "course_id": 14
+    },
+    {
+      "word_english": "Mother",
+      "word_spanish": "Madre",
+      "meaning_english": "a woman in relation to her child or children",
+      "meaning_spanish": "una mujer en relación con su hijo o hijos",
+      "example_english": "My mother cooks the best meals.",
+      "example_spanish": "Mi madre cocina las mejores comidas.",
+      "course_id": 14
+    },
+    {
+      "word_english": "Nice",
+      "word_spanish": "Agradable",
+      "meaning_english": "pleasant; agreeable; satisfactory",
+      "meaning_spanish": "agradable; agradable; satisfactorio",
+      "example_english": "It's nice to meet you.",
+      "example_spanish": "Es un placer conocerte.",
+      "course_id": 14
+    },
+    {
+      "word_english": "Orange",
+      "word_spanish": "Naranja",
+      "meaning_english": "a round juicy citrus fruit with a tough bright reddish-yellow rind",
+      "meaning_spanish": "una fruta cítrica redonda y jugosa con una cáscara dura de color rojizo amarillento brillante",
+      "example_english": "I like to drink orange juice for breakfast.",
+      "example_spanish": "Me gusta tomar jugo de naranja para el desayuno.",
+      "course_id": 14
+    },
+    {
+      "word_english": "Pizza",
+      "word_spanish": "Pizza",
+      "meaning_english": "a dish of Italian origin consisting of a flat, round base of dough baked with a topping of tomato sauce and cheese, typically with added meat or vegetables",
+      "meaning_spanish": "un plato de origen italiano que consiste en una base plana y redonda de masa horneada con una cobertura de salsa de tomate y queso, típicamente con carne o verduras añadidas",
+      "example_english": "Let's order pizza for dinner tonight.",
+      "example_spanish": "Pidamos pizza para la cena de esta noche.",
+      "course_id": 14
+    },
+    {
+      "word_english": "Queen",
+      "word_spanish": "Reina",
+      "meaning_english": "the female ruler of an independent state, especially one who inherits the position by right of birth",
+      "meaning_spanish": "la gobernante femenina de un estado independiente, especialmente aquella que hereda el cargo por derecho de nacimiento",
+      "example_english": "The queen wore a beautiful crown.",
+      "example_spanish": "La reina llevaba una hermosa corona.",
+      "course_id": 14
+    },
+    {
+      "word_english": "Rain",
+      "word_spanish": "Lluvia",
+      "meaning_english": "moisture condensed from the atmosphere that falls visibly in separate drops",
+      "meaning_spanish": "humedad condensada de la atmósfera que cae visiblemente en gotas separadas",
+      "example_english": "We decided to stay inside because of the rain.",
+      "example_spanish": "Decidimos quedarnos dentro debido a la lluvia.",
+      "course_id": 14
+    },
+    {
+      "word_english": "Sun",
+      "word_spanish": "Sol",
+      "meaning_english": "the star around which the earth orbits, which provides light and heat for the earth",
+      "meaning_spanish": "la estrella alrededor de la cual orbita la tierra, que proporciona luz y calor para la tierra",
+      "example_english": "The sun rises in the east.",
+      "example_spanish": "El sol sale por el este.",
+      "course_id": 14
+    },
+    {
+      "word_english": "Tree",
+      "word_spanish": "Árbol",
+      "meaning_english": "a woody perennial plant, typically having a single stem or trunk growing to a considerable height and bearing lateral branches at some distance from the ground",
+      "meaning_spanish": "una planta perenne leñosa, típicamente con un solo tallo o tronco que crece a una considerable altura y que lleva ramas laterales a cierta distancia del suelo",
+      "example_english": "I like to sit under the shade of a tree.",
+      "example_spanish": "Me gusta sentarme bajo la sombra de un árbol.",
+      "course_id": 14
+    }
+  ]
+  
+
+
+  [
+    {
+      "word_english": "Umbrella",
+      "word_spanish": "Paraguas",
+      "meaning_english": "a device consisting of a circular canopy of cloth on a folding metal frame supported by a central rod, used as protection against rain or sometimes sun",
+      "meaning_spanish": "un dispositivo que consiste en un dosel circular de tela en un marco de metal plegable sostenido por una varilla central, usado como protección contra la lluvia o a veces el sol",
+      "example_english": "Don't forget to bring your umbrella when it's raining.",
+      "example_spanish": "No olvides traer tu paraguas cuando esté lloviendo.",
+      "course_id": 14
+    },
+    {
+      "word_english": "Vehicle",
+      "word_spanish": "Vehículo",
+      "meaning_english": "a machine, usually with wheels and an engine, used for transporting people or goods on land, especially on roads",
+      "meaning_spanish": "una máquina, generalmente con ruedas y un motor, usada para transportar personas o mercancías en tierra, especialmente en carreteras",
+      "example_english": "We need a vehicle to travel long distances.",
+      "example_spanish": "Necesitamos un vehículo para viajar largas distancias.",
+      "course_id": 14
+    },
+    {
+      "word_english": "Water",
+      "word_spanish": "Agua",
+      "meaning_english": "a colorless, transparent, odorless liquid that forms the seas, lakes, rivers, and rain and is the basis of the fluids of living organisms",
+      "meaning_spanish": "un líquido incoloro, transparente e inodoro que forma los mares, lagos, ríos y lluvias y es la base de los fluidos de los organismos vivos",
+      "example_english": "I'm thirsty, can I have some water?",
+      "example_spanish": "Tengo sed, ¿puedo tomar un poco de agua?",
+      "course_id": 14
+    },
+    {
+      "word_english": "Xylophone",
+      "word_spanish": "Xilófono",
+      "meaning_english": "a musical instrument played by striking a row of wooden bars of different lengths with mallets, producing musical notes",
+      "meaning_spanish": "un instrumento musical tocado al golpear una fila de barras de madera de diferentes longitudes con baquetas, produciendo notas musicales",
+      "example_english": "She plays the xylophone beautifully.",
+      "example_spanish": "Ella toca el xilófono maravillosamente.",
+      "course_id": 14
+    },
+    {
+      "word_english": "Yellow",
+      "word_spanish": "Amarillo",
+      "meaning_english": "of the color between green and orange in the spectrum, a primary subtractive color complementary to blue; colored like ripe lemons or egg yolks",
+      "meaning_spanish": "del color entre verde y naranja en el espectro, un color primario sustractivo complementario al azul; de color como limones maduros o yemas de huevo",
+      "example_english": "The sunflowers are yellow.",
+      "example_spanish": "Los girasoles son amarillos.",
+      "course_id": 14
+    },
+    {
+      "word_english": "Zoo",
+      "word_spanish": "Zoológico",
+      "meaning_english": "an establishment that maintains a collection of wild animals, typically in a park or gardens, for study, conservation, or display to the public",
+      "meaning_spanish": "un establecimiento que mantiene una colección de animales salvajes, típicamente en un parque o jardines, para estudio, conservación o exhibición al público",
+      "example_english": "We visited the zoo and saw many exotic animals.",
+      "example_spanish": "Visitamos el zoológico y vimos muchos animales exóticos.",
+      "course_id": 14
+    },
+    {
+      "word_english": "Apple",
+      "word_spanish": "Manzana",
+      "meaning_english": "a round fruit with red or green skin and a whitish interior",
+      "meaning_spanish": "una fruta redonda con piel roja o verde y un interior blanquecino",
+      "example_english": "I like to eat an apple every day.",
+      "example_spanish": "Me gusta comer una manzana todos los días.",
+      "course_id": 14
+    },
+    {
+      "word_english": "Ball",
+      "word_spanish": "Pelota",
+      "meaning_english": "a solid or hollow spherical or egg-shaped object that is kicked, thrown, or hit in a game",
+      "meaning_spanish": "un objeto esférico o en forma de huevo sólido o hueco que se patea, lanza o golpea en un juego",
+      "example_english": "Let's play ball in the park.",
+      "example_spanish": "Juguemos a la pelota en el parque.",
+      "course_id": 14
+    },
+    {
+      "word_english": "Cat",
+      "word_spanish": "Gato",
+      "meaning_english": "a small domesticated carnivorous mammal with soft fur, a short snout, and retractile claws",
+      "meaning_spanish": "un pequeño mamífero carnívoro domesticado con pelaje suave, un hocico corto y garras retráctiles",
+      "example_english": "My cat loves to chase mice.",
+      "example_spanish": "A mi gato le encanta perseguir ratones.",
+      "course_id": 14
+    },
+    {
+      "word_english": "Door",
+      "word_spanish": "Puerta",
+      "meaning_english": "a hinged, sliding, or revolving barrier at the entrance to a building, room, or vehicle, or in the framework of a cupboard",
+      "meaning_spanish": "una barrera articulada, deslizante o giratoria en la entrada de un edificio, habitación o vehículo, o en el marco de un armario",
+      "example_english": "Please close the door behind you.",
+      "example_spanish": "Por favor, cierra la puerta detrás de ti.",
+      "course_id": 14
+    },
+    {
+      "word_english": "Elephant",
+      "word_spanish": "Elefante",
+      "meaning_english": "a very large herbivorous mammal with a trunk and large tusks, native to Africa and parts of Asia",
+      "meaning_spanish": "un mamífero herbívoro muy grande con una trompa y grandes colmillos, nativo de África y partes de Asia",
+      "example_english": "Elephants are known for their intelligence and memory.",
+      "example_spanish": "Los elefantes son conocidos por su inteligencia y memoria.",
+      "course_id": 14
+    },
+    {
+      "word_english": "Fish",
+      "word_spanish": "Pescado",
+      "meaning_english": "a limbless cold-blooded vertebrate animal with gills and fins living wholly in water",
+      "meaning_spanish": "un animal vertebrado sin extremidades de sangre fría con branquias y aletas que vive completamente en agua",
+      "example_english": "I like to eat grilled fish.",
+      "example_spanish": "Me gusta comer pescado a la parrilla.",
+      "course_id": 14
+    },
+    {
+      "word_english": "Grapes",
+      "word_spanish": "Uvas",
+      "meaning_english": "the fruit of a woody vine growing in clusters, and consisting of smooth-skinned berries, used for making wine or eaten as a fruit",
+      "meaning_spanish": "el fruto de una vid leñosa que crece en racimos, y consiste en bayas de piel suave, utilizadas para hacer vino o comer como fruta",
+      "example_english": "Would you like some grapes?",
+      "example_spanish": "¿Te gustaría algunas uvas?",
+      "course_id": 14
+    },
+    {
+      "word_english": "Hat",
+      "word_spanish": "Sombrero",
+      "meaning_english": "a shaped covering for the head worn for warmth, as a fashion item, or as part of a uniform",
+      "meaning_spanish": "una cubierta conformada para la cabeza usada para abrigo, como artículo de moda o como parte de un uniforme",
+      "example_english": "He always wears a hat when it's sunny.",
+      "example_spanish": "Él siempre lleva un sombrero cuando hace sol.",
+      "course_id": 14
+    },
+    {
+      "word_english": "Ice",
+      "word_spanish": "Hielo",
+      "meaning_english": "frozen water, a brittle, transparent crystalline solid",
+      "meaning_spanish": "agua congelada, un sólido cristalino transparente y frágil",
+      "example_english": "Can you put some ice in my drink?",
+      "example_spanish": "¿Puedes poner un poco de hielo en mi bebida?",
+      "course_id": 14
+    },
+    {
+      "word_english": "Juice",
+      "word_spanish": "Jugo",
+      "meaning_english": "the liquid obtained from or present in fruit or vegetables",
+      "meaning_spanish": "el líquido obtenido de o presente en frutas o verduras",
+      "example_english": "Orange juice is my favorite.",
+      "example_spanish": "El jugo de naranja es mi favorito.",
+      "course_id": 14
+    },
+    {
+      "word_english": "Kite",
+      "word_spanish": "Cometa",
+      "meaning_english": "a toy consisting of a light frame with thin material stretched over it, flown in the wind at the end of a long string",
+      "meaning_spanish": "un juguete que consiste en un armazón ligero con material delgado estirado sobre él, volado en el viento al final de una larga cuerda",
+      "example_english": "Let's go fly a kite at the park.",
+      "example_spanish": "Vamos a volar una cometa en el parque.",
+      "course_id": 14
+    },
+    {
+      "word_english": "Lemon",
+      "word_spanish": "Limón",
+      "meaning_english": "a yellow oval citrus fruit with thick skin and fragrant, acidic juice",
+      "meaning_spanish": "una fruta cítrica ovalada y amarilla con piel gruesa y jugo fragante y ácido",
+      "example_english": "I like to add lemon to my water.",
+      "example_spanish": "Me gusta agregar limón a mi agua.",
+      "course_id": 14
+    },
+    {
+      "word_english": "Mouse",
+      "word_spanish": "Ratón",
+      "meaning_english": "a small rodent that typically has a pointed snout, relatively large ears and eyes, and a long tail",
+      "meaning_spanish": "un pequeño roedor que típicamente tiene un hocico puntiagudo, orejas y ojos relativamente grandes, y una cola larga",
+      "example_english": "There's a mouse in the kitchen!",
+      "example_spanish": "¡Hay un ratón en la cocina!",
+      "course_id": 14
+    },
+    {
+      "word_english": "Nose",
+      "word_spanish": "Nariz",
+      "meaning_english": "the part projecting above the mouth on the face of a person or animal, containing the nostrils and used for breathing and smelling",
+      "meaning_spanish": "la parte que sobresale sobre la boca en la cara de una persona o animal, que contiene las fosas nasales y se usa para respirar y oler",
+      "example_english": "I smell something delicious with my nose.",
+      "example_spanish": "Huelo algo delicioso con mi nariz.",
+      "course_id": 14
+    }
+  ]
+  
+
+
+  [
+    {
+      "word_english": "Psychology",
+      "word_spanish": "Psicología",
+      "meaning_english": "the scientific study of the human mind and its functions, especially those affecting behavior in a given context",
+      "meaning_spanish": "el estudio científico de la mente humana y sus funciones, especialmente aquellas que afectan el comportamiento en un contexto dado",
+      "example_english": "She decided to major in psychology to better understand human behavior.",
+      "example_spanish": "Decidió especializarse en psicología para comprender mejor el comportamiento humano.",
+      "course_id": 14
+    },
+    {
+      "word_english": "Emotion",
+      "word_spanish": "Emoción",
+      "meaning_english": "a natural instinctive state of mind deriving from one's circumstances, mood, or relationships with others",
+      "meaning_spanish": "un estado de ánimo instintivo natural derivado de las circunstancias, el estado de ánimo o las relaciones con los demás",
+      "example_english": "Her voice was full of emotion as she spoke about her experiences.",
+      "example_spanish": "Su voz estaba llena de emoción mientras hablaba sobre sus experiencias.",
+      "course_id": 14
+    },
+    {
+      "word_english": "Motivation",
+      "word_spanish": "Motivación",
+      "meaning_english": "the reason or reasons one has for acting or behaving in a particular way",
+      "meaning_spanish": "la razón o razones que uno tiene para actuar o comportarse de una manera particular",
+      "example_english": "His motivation to succeed comes from his desire to provide for his family.",
+      "example_spanish": "Su motivación para tener éxito proviene de su deseo de proveer para su familia.",
+      "course_id": 14
+    },
+    {
+      "word_english": "Personality",
+      "word_spanish": "Personalidad",
+      "meaning_english": "the combination of characteristics or qualities that form an individual's distinctive character",
+      "meaning_spanish": "la combinación de características o cualidades que forman el carácter distintivo de un individuo",
+      "example_english": "She has a bubbly personality that everyone loves.",
+      "example_spanish": "Ella tiene una personalidad burbujeante que a todos les encanta.",
+      "course_id": 14
+    },
+    {
+      "word_english": "Therapy",
+      "word_spanish": "Terapia",
+      "meaning_english": "treatment intended to relieve or heal a disorder",
+      "meaning_spanish": "tratamiento destinado a aliviar o curar un trastorno",
+      "example_english": "He attends therapy sessions every week to work through his issues.",
+      "example_spanish": "Asiste a sesiones de terapia todas las semanas para trabajar en sus problemas.",
+      "course_id": 14
+    },
+    {
+      "word_english": "Stress",
+      "word_spanish": "Estrés",
+      "meaning_english": "a state of mental or emotional strain or tension resulting from adverse or demanding circumstances",
+      "meaning_spanish": "un estado de tensión o tensión mental o emocional resultante de circunstancias adversas o exigentes",
+      "example_english": "She feels a lot of stress at work.",
+      "example_spanish": "Ella siente mucho estrés en el trabajo.",
+      "course_id": 14
+    },
+    {
+      "word_english": "Anxiety",
+      "word_spanish": "Ansiedad",
+      "meaning_english": "a feeling of worry, nervousness, or unease about something with an uncertain outcome",
+      "meaning_spanish": "un sentimiento de preocupación, nerviosismo o inquietud sobre algo con un resultado incierto",
+      "example_english": "He experiences anxiety before speaking in public.",
+      "example_spanish": "Él experimenta ansiedad antes de hablar en público.",
+      "course_id": 14
+    },
+    {
+      "word_english": "Depression",
+      "word_spanish": "Depresión",
+      "meaning_english": "feelings of severe despondency and dejection",
+      "meaning_spanish": "sentimientos de desesperación y abatimiento graves",
+      "example_english": "She sought help for her depression from a therapist.",
+      "example_spanish": "Buscó ayuda para su depresión de un terapeuta.",
+      "course_id": 14
+    },
+    {
+      "word_english": "Self-esteem",
+      "word_spanish": "Autoestima",
+      "meaning_english": "confidence in one's own worth or abilities; self-respect",
+      "meaning_spanish": "confianza en el propio valor o habilidades; autorespeto",
+      "example_english": "Improving her self-esteem helped her overcome many obstacles.",
+      "example_spanish": "Mejorar su autoestima le ayudó a superar muchos obstáculos.",
+      "course_id": 14
+    },
+    {
+      "word_english": "Dream",
+      "word_spanish": "Sueño",
+      "meaning_english": "a series of thoughts, images, and sensations occurring in a person's mind during sleep",
+      "meaning_spanish": "una serie de pensamientos, imágenes y sensaciones que ocurren en la mente de una persona durante el sueño",
+      "example_english": "She had a strange dream last night.",
+      "example_spanish": "Ella tuvo un sueño extraño anoche.",
+      "course_id": 14
+    },
+    {
+      "word_english": "Memory",
+      "word_spanish": "Memoria",
+      "meaning_english": "the faculty by which the mind stores and remembers information",
+      "meaning_spanish": "la facultad por la cual la mente almacena y recuerda información",
+      "example_english": "His memory of childhood events is very clear.",
+      "example_spanish": "Su memoria de los eventos de la infancia es muy clara.",
+      "course_id": 14
+    },
+    {
+      "word_english": "Learning",
+      "word_spanish": "Aprendizaje",
+      "meaning_english": "the acquisition of knowledge or skills through experience, study, or being taught",
+      "meaning_spanish": "la adquisición de conocimientos o habilidades a través de la experiencia, el estudio o la enseñanza",
+      "example_english": "Language learning can be challenging but rewarding.",
+      "example_spanish": "El aprendizaje de idiomas puede ser desafiante pero gratificante.",
+      "course_id": 14
+    },
+    {
+      "word_english": "Perception",
+      "word_spanish": "Percepción",
+      "meaning_english": "the ability to see, hear, or become aware of something through the senses",
+      "meaning_spanish": "la capacidad de ver, oír o darse cuenta de algo a través de los sentidos",
+      "example_english": "His perception of the situation was different from hers.",
+      "example_spanish": "Su percepción de la situación era diferente a la de ella.",
+      "course_id": 14
+    },
+    {
+      "word_english": "Attention",
+      "word_spanish": "Atención",
+      "meaning_english": "the action of focusing one's mental powers on an object or event",
+      "meaning_spanish": "la acción de enfocar los poderes mentales en un objeto o evento",
+      "example_english": "He paid close attention to the instructions.",
+      "example_spanish": "Prestó mucha atención a las instrucciones.",
+      "course_id": 14
+    },
+    {
+      "word_english": "Consciousness",
+      "word_spanish": "Conciencia",
+      "meaning_english": "the state of being aware of and able to perceive one's surroundings; the fact of awareness by the mind of itself and the world",
+      "meaning_spanish": "el estado de ser consciente y capaz de percibir los alrededores; el hecho de la conciencia por parte de la mente de sí misma y del mundo",
+      "example_english": "She regained consciousness after the accident.",
+      "example_spanish": "Recuperó la conciencia después del accidente.",
+      "course_id": 14
+    },
+    {
+      "word_english": "Intelligence",
+      "word_spanish": "Inteligencia",
+      "meaning_english": "the ability to acquire and apply knowledge and skills",
+      "meaning_spanish": "la capacidad de adquirir y aplicar conocimientos y habilidades",
+      "example_english": "She has a high level of intelligence.",
+      "example_spanish": "Ella tiene un alto nivel de inteligencia.",
+      "course_id": 14
+    },
+    {
+      "word_english": "Cognition",
+      "word_spanish": "Cognición",
+      "meaning_english": "the mental action or process of acquiring knowledge and understanding through thought, experience, and the senses",
+      "meaning_spanish": "la acción o proceso mental de adquirir conocimiento y comprensión a través del pensamiento, la experiencia y los sentidos",
+      "example_english": "Cognition plays a key role in problem-solving.",
+      "example_spanish": "La cognición juega un papel clave en la resolución de problemas.",
+      "course_id": 14
+    },
+    {
+      "word_english": "Socialization",
+      "word_spanish": "Socialización",
+      "meaning_english": "the activity of mixing socially with others",
+      "meaning_spanish": "la actividad de mezclarse socialmente con otros",
+      "example_english": "Socialization begins at a young age.",
+      "example_spanish": "La socialización comienza a una edad temprana.",
+      "course_id": 14
+    },
+    {
+      "word_english": "Development",
+      "word_spanish": "Desarrollo",
+      "meaning_english": "the process of growth or change",
+      "meaning_spanish": "el proceso de crecimiento o cambio",
+      "example_english": "The development of a child is influenced by many factors.",
+      "example_spanish": "El desarrollo de un niño está influenciado por muchos factores.",
+      "course_id": 14
+    },
+    {
+      "word_english": "Behavior",
+      "word_spanish": "Comportamiento",
+      "meaning_english": "the way in which one acts or conducts oneself, especially toward others",
+      "meaning_spanish": "la manera en que uno actúa o se comporta, especialmente hacia los demás",
+      "example_english": "His behavior at the party was unacceptable.",
+      "example_spanish": "Su comportamiento en la fiesta fue inaceptable.",
+      "course_id": 14
+    }
+  ]
+
+
+  [
+    {
+      "word_english": "Empathy",
+      "word_spanish": "Empatía",
+      "meaning_english": "the ability to understand and share the feelings of another",
+      "meaning_spanish": "la capacidad de entender y compartir los sentimientos de otro",
+      "example_english": "Empathy is important for building strong relationships.",
+      "example_spanish": "La empatía es importante para construir relaciones sólidas."
+    },
+    {
+      "word_english": "Sensation",
+      "word_spanish": "Sensación",
+      "meaning_english": "a physical feeling or perception resulting from something that happens to or comes into contact with the body",
+      "meaning_spanish": "una sensación física o percepción resultante de algo que ocurre o entra en contacto con el cuerpo",
+      "example_english": "She felt a sensation of warmth as she stepped into the sunlight.",
+      "example_spanish": "Sintió una sensación de calor al entrar en la luz del sol."
+    },
+    {
+      "word_english": "Intuition",
+      "word_spanish": "Intuición",
+      "meaning_english": "the ability to understand something instinctively, without the need for conscious reasoning",
+      "meaning_spanish": "la capacidad de entender algo instintivamente, sin necesidad de razonamiento consciente",
+      "example_english": "Her intuition told her not to trust him.",
+      "example_spanish": "Su intuición le dijo que no confiara en él."
+    },
+    {
+      "word_english": "Bias",
+      "word_spanish": "Prejuicio",
+      "meaning_english": "prejudice in favor of or against one thing, person, or group compared with another, usually in a way considered to be unfair",
+      "meaning_spanish": "prejuicio a favor o en contra de una cosa, persona o grupo en comparación con otro, generalmente de una manera considerada injusta",
+      "example_english": "Her bias against certain groups affected her judgment.",
+      "example_spanish": "Su prejuicio contra ciertos grupos afectó su juicio."
+    },
+    {
+      "word_english": "Counseling",
+      "word_spanish": "Asesoramiento",
+      "meaning_english": "professional guidance in resolving personal conflicts and emotional problems",
+      "meaning_spanish": "orientación profesional para resolver conflictos personales y problemas emocionales",
+      "example_english": "She sought counseling to help her cope with her anxiety.",
+      "example_spanish": "Buscó asesoramiento para ayudarla a sobrellevar su ansiedad."
+    },
+    {
+      "word_english": "Mindfulness",
+      "word_spanish": "Atención plena",
+      "meaning_english": "the quality or state of being conscious or aware of something",
+      "meaning_spanish": "la calidad o estado de estar consciente o consciente de algo",
+      "example_english": "Practicing mindfulness can help reduce stress.",
+      "example_spanish": "Practicar la atención plena puede ayudar a reducir el estrés."
+    },
+    {
+      "word_english": "Neuroscience",
+      "word_spanish": "Neurociencia",
+      "meaning_english": "the scientific study of the nervous system and the brain",
+      "meaning_spanish": "el estudio científico del sistema nervioso y el cerebro",
+      "example_english": "She is conducting research in the field of neuroscience.",
+      "example_spanish": "Está realizando investigaciones en el campo de la neurociencia."
+    },
+    {
+      "word_english": "Psychoanalysis",
+      "word_spanish": "Psicoanálisis",
+      "meaning_english": "a system of psychological theory and therapy that aims to treat mental disorders by investigating the interaction of conscious and unconscious elements in the mind",
+      "meaning_spanish": "un sistema de teoría y terapia psicológica que tiene como objetivo tratar trastornos mentales investigando la interacción de elementos conscientes e inconscientes en la mente",
+      "example_english": "She underwent psychoanalysis to better understand her behavior.",
+      "example_spanish": "Se sometió a psicoanálisis para entender mejor su comportamiento."
+    },
+    {
+      "word_english": "Resilience",
+      "word_spanish": "Resiliencia",
+      "meaning_english": "the capacity to recover quickly from difficulties; toughness",
+      "meaning_spanish": "la capacidad de recuperarse rápidamente de las dificultades; fortaleza",
+      "example_english": "Her resilience helped her bounce back from setbacks.",
+      "example_spanish": "Su resiliencia la ayudó a recuperarse de contratiempos."
+    },
+    {
+      "word_english": "Cognitive",
+      "word_spanish": "Cognitivo",
+      "meaning_english": "relating to cognition, the mental action or process of acquiring knowledge and understanding through thought, experience, and the senses",
+      "meaning_spanish": "relativo a la cognición, la acción o proceso mental de adquirir conocimiento y comprensión a través del pensamiento, la experiencia y los sentidos",
+      "example_english": "Cognitive therapy focuses on changing thought patterns.",
+      "example_spanish": "La terapia cognitiva se centra en cambiar patrones de pensamiento."
+    },
+    {
+      "word_english": "Behavioral",
+      "word_spanish": "Conductual",
+      "meaning_english": "relating to behavior, the way in which one acts or conducts oneself, especially toward others",
+      "meaning_spanish": "relativo al comportamiento, la manera en que uno actúa o se comporta, especialmente hacia los demás",
+      "example_english": "Behavioral therapy focuses on changing behavior patterns.",
+      "example_spanish": "La terapia conductual se centra en cambiar patrones de comportamiento."
+    },
+    {
+      "word_english": "Psychotherapy",
+      "word_spanish": "Psicoterapia",
+      "meaning_english": "the treatment of mental disorder by psychological rather than medical means",
+      "meaning_spanish": "el tratamiento de trastornos mentales por medios psicológicos en lugar de médicos",
+      "example_english": "She underwent psychotherapy to address her depression.",
+      "example_spanish": "Se sometió a psicoterapia para tratar su depresión.",
+    },
+    {
+      "word_english": "Hypnosis",
+      "word_spanish": "Hipnosis",
+      "meaning_english": "a trance-like state in which a person has heightened focus, concentration, and inner absorption",
+      "meaning_spanish": "un estado similar al trance en el que una persona tiene una atención, concentración y absorción interna elevadas",
+      "example_english": "She used hypnosis to help manage her pain.",
+      "example_spanish": "Usó la hipnosis para ayudar a controlar su dolor.",
+    },
+    {
+      "word_english": "Insight",
+      "word_spanish": "Visión",
+      "meaning_english": "the capacity to gain an accurate and deep intuitive understanding of a person or thing",
+      "meaning_spanish": "la capacidad de obtener una comprensión intuitiva precisa y profunda de una persona o cosa",
+      "example_english": "She had a sudden insight into the problem.",
+      "example_spanish": "Tuvo una visión repentina del problema.",
+    },
+    {
+      "word_english": "Mental",
+      "word_spanish": "Mental",
+      "meaning_english": "relating to the mind",
+      "meaning_spanish": "relativo a la mente",
+      "example_english": "He suffered from mental health issues.",
+      "example_spanish": "Padecía problemas de salud mental.",
+    },
+    {
+      "word_english": "Disorder",
+      "word_spanish": "Trastorno",
+      "meaning_english": "a disturbance in physical or mental health or functions",
+      "meaning_spanish": "una alteración en la salud física o mental o las funciones",
+      "example_english": "She was diagnosed with a sleep disorder.",
+      "example_spanish": "Le diagnosticaron un trastorno del sueño.",
+    },
+    {
+      "word_english": "Phobia",
+      "word_spanish": "Fobia",
+      "meaning_english": "an extreme or irrational fear of or aversion to something",
+      "meaning_spanish": "un miedo extremo o irracional o aversión a algo",
+      "example_english": "He had a phobia of spiders.",
+      "example_spanish": "Tenía fobia a las arañas.",
+    },
+    {
+      "word_english": "Addiction",
+      "word_spanish": "Adicción",
+      "meaning_english": "the fact or condition of being addicted to a particular substance or activity",
+      "meaning_spanish": "el hecho o condición de estar adicto a una sustancia o actividad particular",
+      "example_english": "He struggled with addiction for many years.",
+      "example_spanish": "Luchó contra la adicción durante muchos años.",
+    },
+    {
+      "word_english": "Recovery",
+      "word_spanish": "Recuperación",
+      "meaning_english": "the action or process of regaining possession or control of something lost or stolen",
+      "meaning_spanish": "la acción o proceso de recuperar la posesión o el control de algo perdido o robado",
+      "example_english": "His recovery from addiction was a long and difficult journey.",
+      "example_spanish": "Su recuperación de la adicción fue un viaje largo y difícil.",
+    },
+    {
+      "word_english": "Wellness",
+      "word_spanish": "Bienestar",
+      "meaning_english": "the state of being in good health, especially as an actively pursued goal",
+      "meaning_spanish": "el estado de estar en buena salud, especialmente como un objetivo perseguido activamente",
+      "example_english": "She focused on wellness by eating healthy and exercising regularly.",
+      "example_spanish": "Se centró en el bienestar al comer sano y hacer ejercicio regularmente.",
+    }
+  ]
+  
+  
