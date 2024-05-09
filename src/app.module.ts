@@ -23,11 +23,11 @@ import { CardSimilarModule } from './card_simility/card.module';
     ConfigModule.forRoot({ cache: true }),
     TypeOrmModule.forRoot({
       type: 'postgres',
-      host: 'localhost', // reemplaza con tu host
+      host: 'dpg-coul16ol6cac73b6bro0-a.oregon-postgres.render.com', // reemplaza con tu host
       port: 5432, // reemplaza con tu puerto
-      username: 'postgres', // reemplaza con tu nombre de usuario
-      password: 'admin', // reemplaza con tu contraseña
-      database: 'NextWordBD', // reemplaza con tu nombre de base de datos
+      username: 'nextwordbd_user', // reemplaza con tu nombre de usuario
+      password: '0HCo5GTKNY3DotBoN4HDeBATbXU9ZQ75', // reemplaza con tu contraseña
+      database: 'nextwordbd', // reemplaza con tu nombre de base de datos
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: false, // establece en false para no sobrescribir las tablas existentes
     })],

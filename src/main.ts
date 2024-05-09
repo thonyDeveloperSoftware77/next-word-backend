@@ -7,7 +7,9 @@ import * as cors from 'cors';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.useGlobalFilters(new AllExceptionsFilter());
-  app.use(cors());
-  await app.listen(3001 || process.env.PORT);
+  app.use(cors({
+    origin: true,
+  }));
+  await app.listen(3001);
 }
 bootstrap();
