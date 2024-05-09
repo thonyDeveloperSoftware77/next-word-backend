@@ -8,6 +8,6 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.useGlobalFilters(new AllExceptionsFilter());
   app.use(cors());
-  await app.listen(3001);
+  await app.listen(3001 || process.env.PORT);
 }
 bootstrap();
