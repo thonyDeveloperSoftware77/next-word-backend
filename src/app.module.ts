@@ -30,6 +30,12 @@ import { CardSimilarModule } from './card_simility/card.module';
       database: 'nextwordbd', // reemplaza con tu nombre de base de datos
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: false, // establece en false para no sobrescribir las tablas existentes
+      ssl: true,
+      extra: {
+        ssl: {
+          rejectUnauthorized: false,
+        },
+      },
     })],
   controllers: [],
   providers: [],
