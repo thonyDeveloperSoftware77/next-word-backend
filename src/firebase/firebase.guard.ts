@@ -7,7 +7,7 @@ import { FirebaseRepository } from './firebase.service';
 
 @Injectable()
 export class FirebaseGuard implements CanActivate {
-  constructor(private firebaseRepository: FirebaseRepository) {}
+  constructor(private firebaseRepository: FirebaseRepository) { }
 
   canActivate(
     context: ExecutionContext,
@@ -21,7 +21,15 @@ export class FirebaseGuard implements CanActivate {
 
     const token = authorizationHeader.split(' ')[1]; // Bearer <token>
     return this.firebaseRepository.verifyToken(token)
-      .then(uid => !!uid)
+      .then(uid => {
+        if (uid) {
+          request.user = { uid };
+          return true;
+        } else {
+          return false;
+        }
+      })
       .catch(() => false);
+
   }
 }

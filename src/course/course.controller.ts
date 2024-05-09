@@ -1,17 +1,22 @@
 /* eslint-disable prettier/prettier */
 
-import { Body, Controller, Delete, Get, Param, Post, Put } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Post, Put, UseGuards } from "@nestjs/common";
 import { CourseService } from "./course.service";
 import { Course } from "./entities/course.entity";
+import { CourseStudent } from "./entities/course.student.entity";
+import { User } from "src/firebase/user.decorator";
+import { FirebaseGuard } from "src/firebase/firebase.guard";
 
 
 @Controller('course')
+@UseGuards(FirebaseGuard)
 export class CourseController {
     constructor(private readonly courseService: CourseService) { }
 
 
     @Get()
-    findAll(): Promise<Course[]> {
+    findAll(@User() user): Promise<Course[]> {
+        console.log(user);
         return this.courseService.findAll();
     }
 
@@ -23,6 +28,14 @@ export class CourseController {
     @Get(':id')
     findOne(@Param('id') id: number): Promise<Course> {
         return this.courseService.findOne(id);
+    }
+
+    @Get('/student/:course_id')
+    findStudentByCourse(
+        @User() user,
+        @Param('course_id') course_id: number): Promise<CourseStudent[]> {
+            console.log(user);
+        return this.courseService.findAllStudentByCourse(course_id);
     }
 
     @Put(':uid')
@@ -44,6 +57,14 @@ export class CourseController {
         return this.courseService.update(id, code, name, description, duration, start_date, end_date, instructor, level, prerequisites, learning_objectives, course_content, type);
     }
 
+    @Put('/student/status/:course_student_id')
+    async changeStateStudentCourse(
+        @Param('course_student_id') course_student_id: number,
+        @User() user,
+        @Body('status') status: number
+    ) {
+        return this.courseService.changeStateStudentCourse(course_student_id, user.uid ,status);
+    }
 
     @Post()
     create(@Body() course: Course): Promise<Course> {

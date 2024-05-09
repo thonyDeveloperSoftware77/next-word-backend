@@ -1,7 +1,6 @@
 /* eslint-disable prettier/prettier */
 // student.entity.ts
-import { Entity, PrimaryColumn, Column, ManyToOne,JoinColumn } from 'typeorm';
-import { Course } from '../../course/entities/course.entity';
+import { Entity, PrimaryColumn, Column} from 'typeorm';
 
 @Entity('student')
 export class Student {
@@ -13,9 +12,7 @@ export class Student {
 
   @Column({ unique: true })
   email: string;
-
-  @ManyToOne(() => Course)
-  @JoinColumn({ name: 'course_id' })
-  course: Course;
   
+  @Column()
+  password: string;
 }

@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 
-import { Controller, Delete, Get, Param, Post, Put } from "@nestjs/common";
+import { Body, Controller, Get, Param, Post, Put } from "@nestjs/common";
 import { StudentService } from "./student.service";
 import { Student } from "./entities/student.entity";
 
@@ -29,12 +29,16 @@ export class StudentController{
     }
 
     @Post()
-    create(@Param('student') student: Student): Promise<Student>{
-        return this.studentService.create(student);
+    create(
+        @Body('name') name: string,
+        @Body('email') email: string,
+        @Body('password') password: string,
+    ): Promise<Student>{
+        return this.studentService.create(
+            name,
+            email,
+            password
+        );
     }
 
-    @Delete(':uid')
-    async delete(@Param('uid') uid: string): Promise<Student>{
-        return this.studentService.deleteCourse(uid);
-    }
 }

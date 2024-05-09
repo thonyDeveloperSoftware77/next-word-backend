@@ -6,15 +6,18 @@ import { Course } from "./entities/course.entity";
 import { Repository } from "typeorm";
 import isValidUid, { codeGenerator } from "utils/verifyUID";
 import { Teacher } from "src/teacher/entities/teacher.entity";
+import { CourseStudent } from "./entities/course.student.entity";
 
 
 @Injectable()
 export class CourseService {
     constructor(
         @InjectRepository(Course)
-        private courseRepository: Repository<Course>
-        , @InjectRepository(Teacher)
-        private teacherRepository: Repository<Teacher>
+        private courseRepository: Repository<Course>,
+        @InjectRepository(CourseStudent)
+        private courseStudentRepository: Repository<CourseStudent>,
+        @InjectRepository(Teacher)
+        private teacherRepository: Repository<Teacher>,
     ) { }
 
     async findOneTeacher(uid: string): Promise<Teacher> {
@@ -40,8 +43,24 @@ export class CourseService {
         if (!courses) {
             return [];
         }
-        return courses;
+    return courses;
     }
+
+    async findAllStudentByCourse(course_id: number): Promise<CourseStudent[]> {
+        const course_student = await this.courseStudentRepository.createQueryBuilder('course_student')
+            .innerJoin('course_student.course', 'course', 'course.id = :course_id', { course_id })
+            .innerJoin('course_student.student', 'student')
+            .addSelect(['student.uid', 'student.name', 'student.email'])
+            .getMany();
+
+        if (!course_student) {
+            return [];
+        }
+        return course_student;
+    }
+
+
+
 
 
     async findOne(id: number): Promise<Course> {
@@ -54,7 +73,7 @@ export class CourseService {
 
     async create(course: Course): Promise<Course> {
 
-        
+
 
         //Validación de tipo de curso
 
@@ -101,14 +120,14 @@ export class CourseService {
             //Por el momento se establece el type en private
             course.type = 'private';
 
-           //Buscar el profesor por uid
+            //Buscar el profesor por uid
             if (course.teacher_uid) {
                 const teacher = await this.teacherRepository.findOne({ where: { uid: course.teacher_uid } });
                 if (!teacher) {
                     throw new NotFoundException('El profesor no existe');
                 }
                 course.teacher = teacher;
-            } 
+            }
 
             return this.courseRepository.save(course);
         } catch (error) {
@@ -171,6 +190,37 @@ export class CourseService {
         return updatedCourse;
     }
 
+
+    async changeStateStudentCourse(course_student_id:number, uid,  status:number){
+        //Validar que el estado sea de 1 a 3
+        if(status < 1 || status > 3){
+            throw new ConflictException('Estado inválido');
+        }
+        const course_student = await this.courseStudentRepository.findOne({where:{id:course_student_id}});
+        if(!course_student){
+            throw new NotFoundException('No se encontró el registro');
+        }
+
+        //Buscar el curso por el id, luego verifica que el teacher_uid coincida con el uid del usuario
+        const course_id = course_student.course_id;
+        const teacher_uid = uid;
+
+        const existingCourse = await this.courseRepository.findOne({ where: { id: course_id } });
+        if (!existingCourse) {
+            throw new ConflictException('Este curso no existe');
+        }
+        
+        if(existingCourse.teacher_uid !== teacher_uid){
+            throw new ConflictException('No tiene permisos para realizar esta acción');
+        }
+
+        course_student.status = status;
+        const updatedCourseStudent = await this.courseStudentRepository.save({
+            ...course_student,
+            status
+        });
+        return updatedCourseStudent;
+    }
 
 
     async delete(id: number): Promise<Course> {
