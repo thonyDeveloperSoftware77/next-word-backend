@@ -42,6 +42,19 @@ export class StudentService {
         student.email = email;
         student.password = password;
         student.name = name;
+        //Valida la sintaixs del correo
+        if (!student.email.match(/.+@.+\..+/)) {
+            throw new ConflictException('Correo electrónico inválido');
+        }
+        //Valida la longitud de la contraseña, debe ser minimo 8 caracteres y maximo 15
+        if (student.password.length < 8 || student.password.length > 15) {
+            throw new ConflictException('La contraseña debe tener entre 8 y 15 caracteres');
+        }
+        //valida que el nombre no sea vacio, no contenga numeros ni caracteres especiales
+        if (student.name.length === 0 || student.name.match(/.*[0-9]+.*/) || student.name.match(/.*[^a-zA-Z0-9]+.*/)) {
+            throw new ConflictException('Nombre inválido');
+        }
+
         try {
             const existingStudent = await this.studentRepository.findOne({ where: { email: student.email } });
             if (existingStudent) {

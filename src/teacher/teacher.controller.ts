@@ -1,9 +1,10 @@
 /* eslint-disable prettier/prettier */
 // teacher.controller.ts
-import { Controller, Get, Post, Body, Param, Put, Delete, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Put,  UseGuards } from '@nestjs/common';
 import { TeacherService } from './teacher.service';
 import { Teacher } from './entities/teacher.entity';
 import { FirebaseGuard } from 'src/firebase/firebase.guard';
+import { User } from 'src/firebase/user.decorator';
 
 @Controller('teacher')
 @UseGuards(FirebaseGuard)
@@ -27,13 +28,9 @@ export class TeacherController {
   }
 
   @Post()
-  create(@Body() teacher: Teacher): Promise<Teacher> {
-    return this.teacherService.create(teacher);
+  create(
+    @User() user,
+    @Body() teacher: Teacher): Promise<Teacher> {
+    return this.teacherService.create(user.uid, teacher);
   }
-
-  @Delete(':uid')
-  async delete(@Param('uid') uid: string): Promise<Teacher> {
-    return this.teacherService.delete(uid);
-  }
-
 }

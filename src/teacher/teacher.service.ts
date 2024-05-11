@@ -6,13 +6,16 @@ import { Repository } from 'typeorm';
 import { Teacher } from './entities/teacher.entity';
 import isValidUid from 'utils/verifyUID';
 import { FirebaseRepository } from 'src/firebase/firebase.service';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class TeacherService {
     constructor(
         @InjectRepository(Teacher)
         private teacherRepository: Repository<Teacher>,
-        private firebaseRepository: FirebaseRepository
+        private firebaseRepository: FirebaseRepository,
+        private configService: ConfigService
+        
     ) { }
 
     async findAll(): Promise<Teacher[]> {
@@ -32,7 +35,13 @@ export class TeacherService {
         return teacher;
     }
 
-    async create(teacher: Teacher): Promise<Teacher> {
+    async create(user:string, teacher: Teacher): Promise<Teacher> {
+        const uidAdmin = this.configService.get('USER_ADMIN_UID');
+        if (user !== uidAdmin) {
+            throw new ConflictException('No tienes permisos para realizar esta acción');
+        }else{
+            console.log('Usuario Admin');
+        }
         try {
             const existingTeacher = await this.teacherRepository.findOne({ where: { uid: teacher.uid } });
             if (existingTeacher) {
@@ -41,6 +50,14 @@ export class TeacherService {
             isValidUid(teacher.uid)
             if (isValidUid(teacher.uid)) {
                 throw new ConflictException('UID inválido petición denegada');
+            }
+            //verifica la sintaxis del correo electrónico
+            if (!teacher.email.match(/.+@.+\..+/)) {
+                throw new ConflictException('Correo electrónico inválido');
+            }
+            //verifica la longitud de la contraseña, debe ser minimo 8 caracteres y maximo 15
+            if (teacher.password.length < 8 || teacher.password.length > 15) {
+                throw new ConflictException('La contraseña debe tener entre 8 y 15 caracteres');
             }
 
             // Creacion del usuario en Firebase

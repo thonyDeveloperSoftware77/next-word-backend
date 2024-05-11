@@ -59,6 +59,16 @@ export class CardService {
      * @returns Card[]
      */
     async createCards(card: Card[]) : Promise<Card[]> {
+        //validar que los campos no esten vacios
+        if (card.length === 0) {
+            throw new ConflictException('No se han ingresado tarjetas');
+        }
+        //validar los campos para verificar que son Card
+        card.forEach((element, index) => {
+            if (!element.word_english || !element.word_spanish || !element.meaning_english || !element.meaning_spanish || !element.example_english || !element.example_spanish || !element.course_id) {
+                throw new ConflictException('La tarjeta ' + (index + 1) + ' no tiene todos los campos');
+            }
+        });
         try {
             return this.cardRepository.save(card);
         } catch (error) {
