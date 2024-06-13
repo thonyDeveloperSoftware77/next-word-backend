@@ -3,6 +3,10 @@
 import { Controller, Get, Param  } from '@nestjs/common';
 import { VerifyService } from './verify.service';
 
+interface User {
+  uid: string;
+  role: any;
+}
 @Controller('verify')
 export class VerifyController {
   constructor(private verifyService: VerifyService) { }
@@ -13,7 +17,7 @@ export class VerifyController {
   
 
   @Get(':token')
-  findOne(@Param('token') token: string): Promise<string> {
+  findOne(@Param('token') token: string): Promise<User> {
     console.log(token);
     return this.verifyService.verifyToken(token);
   }

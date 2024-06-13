@@ -15,8 +15,7 @@ export class CourseController {
 
 
     @Get()
-    findAll(@User() user): Promise<Course[]> {
-        console.log(user);
+    findAll(): Promise<Course[]> {
         return this.courseService.findAll();
     }
 
@@ -63,7 +62,7 @@ export class CourseController {
         @User() user,
         @Body('status') status: number
     ) {
-        return this.courseService.changeStateStudentCourse(course_student_id, user.uid ,status);
+        return this.courseService.changeStateStudentCourse(course_student_id, user.uid.uid ,status);
     }
 
     @Post()

@@ -13,16 +13,27 @@ export class FirebaseRepository {
     this.#collection = this.#db.collection('<collection_name>');
   }
 
-  async createUser(user: { email: string, password: string }) {
+  async createUser(user: { email: string, password: string, role: 'admin' | 'teacher' | 'student' }) {
     try {
-      const userRecord = await this.firebaseApp.auth().createUser(user);
+      // Crear el usuario en Firebase Authentication
+      const userRecord = await this.firebaseApp.auth().createUser({
+        email: user.email,
+        password: user.password,
+      });
+
       console.log('Successfully created new user:', userRecord.uid);
+
+      // Asignar el rol al usuario
+      await this.firebaseApp.auth().setCustomUserClaims(userRecord.uid, { role: user.role });
+      console.log(`Role ${user.role} assigned to user ${userRecord.uid}`);
+
       return userRecord;
     } catch (error) {
       console.log('Error creating new user:', error);
       throw error;
     }
   }
+
   
   async deleteUser(uid: string) {
     try {
@@ -38,12 +49,15 @@ export class FirebaseRepository {
 
   async verifyToken(token: string) {
     try {
-      const decodedToken = await this.firebaseApp.auth().verifyIdToken(token);
-      console.log(decodedToken.uid);
-      return decodedToken.uid;
+        const decodedToken = await this.firebaseApp.auth().verifyIdToken(token);
+        console.log(decodedToken.uid);
+        return {
+            uid: decodedToken.uid,
+            role: decodedToken.role || null, // Aquí obtenemos el rol del token
+        };
     } catch (error) {
-      console.log('Error verifying token:', error);
-      throw error;
+        console.log('Error verifying token:', error);
+        throw error;
     }
-  }
+}
 }

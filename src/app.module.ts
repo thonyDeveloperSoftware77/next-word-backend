@@ -10,6 +10,7 @@ import { CourseModule } from './course/course.module';
 import { StudentModule } from './student/student.module';
 import { CardModule } from './card/card.module';
 import { CardSimilarModule } from './card_simility/card.module';
+import { LearnModule } from './learn/learn.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { CardSimilarModule } from './card_simility/card.module';
     CardModule,
     CardSimilarModule,
     VerifyModule,
+    LearnModule,
     ConfigModule.forRoot({ cache: true }),
     TypeOrmModule.forRoot({
       type: 'postgres',

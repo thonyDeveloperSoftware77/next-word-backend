@@ -18,15 +18,6 @@ export class Course {
   description: string;
 
   @Column({ nullable: true })
-  duration: string;
-
-  @Column({ type: 'date', nullable: true })
-  start_date: Date;
-
-  @Column({ type: 'date', nullable: true })
-  end_date: Date;
-
-  @Column({ nullable: true })
   instructor: string;
 
   @Column({ nullable: true })

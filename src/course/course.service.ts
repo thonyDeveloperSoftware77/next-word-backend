@@ -43,7 +43,7 @@ export class CourseService {
         if (!courses) {
             return [];
         }
-    return courses;
+        return courses;
     }
 
     async findAllStudentByCourse(course_id: number): Promise<CourseStudent[]> {
@@ -102,20 +102,6 @@ export class CourseService {
             }
 
             course.code = codeGenerator();
-            //Dependiendo de la duracion y de la fecha de inicio se establece course.end_date
-
-            if (course.duration && course.start_date) {
-                course.end_date = new Date(course.start_date);
-                if (course.duration === '4 weeks') {
-                    course.end_date.setDate(course.end_date.getDate() + 28);
-                } else if (course.duration === '8 weeks') {
-                    course.end_date.setDate(course.end_date.getDate() + 56);
-                } else if (course.duration === '12 weeks') {
-                    course.end_date.setDate(course.end_date.getDate() + 84);
-                } else if (course.duration === '16 weeks') {
-                    course.end_date.setDate(course.end_date.getDate() + 112);
-                }
-            }
 
             //Por el momento se establece el type en private
             course.type = 'private';
@@ -191,36 +177,50 @@ export class CourseService {
     }
 
 
-    async changeStateStudentCourse(course_student_id:number, uid,  status:number){
-        //Validar que el estado sea de 1 a 3
-        if(status < 1 || status > 3){
+    async changeStateStudentCourse(course_student_id: number, uid: string, status: number) {
+        console.log('Parametros:', { course_student_id, uid, status });
+
+        // Validar que el estado sea de 1 a 3
+        if (status < 1 || status > 3) {
             throw new ConflictException('Estado inválido');
         }
-        const course_student = await this.courseStudentRepository.findOne({where:{id:course_student_id}});
-        if(!course_student){
+
+        // Recuperar el registro de course_student
+        const course_student = await this.courseStudentRepository.findOne({ where: { id: course_student_id } });
+        console.log('Registro course_student encontrado:', course_student);
+
+        if (!course_student) {
             throw new NotFoundException('No se encontró el registro');
         }
 
-        //Buscar el curso por el id, luego verifica que el teacher_uid coincida con el uid del usuario
+        // Buscar el curso y verificar el teacher_uid
         const course_id = course_student.course_id;
-        const teacher_uid = uid;
-
         const existingCourse = await this.courseRepository.findOne({ where: { id: course_id } });
+        console.log('Registro de curso encontrado:', existingCourse);
+
         if (!existingCourse) {
             throw new ConflictException('Este curso no existe');
         }
-        
-        if(existingCourse.teacher_uid !== teacher_uid){
+
+        if (existingCourse.teacher_uid !== uid) {
             throw new ConflictException('No tiene permisos para realizar esta acción');
         }
 
-        course_student.status = status;
-        const updatedCourseStudent = await this.courseStudentRepository.save({
-            ...course_student,
-            status
-        });
-        return updatedCourseStudent;
+        // Actualizar el estado del curso_estudiante
+        try {
+            console.log('Intentando actualizar el estado...');
+            await this.courseStudentRepository.update(course_student_id, { status });
+            console.log('Estado actualizado, verificando...');
+            // Verificar la actualización
+            const updatedCourseStudent = await this.courseStudentRepository.findOne({ where: { id: course_student_id } });
+            console.log('Registro course_student actualizado:', updatedCourseStudent);
+            return updatedCourseStudent;
+        } catch (error) {
+            console.log('Error al actualizar:', error);
+            throw new ConflictException('Error al actualizar el estado del estudiante');
+        }
     }
+
 
 
     async delete(id: number): Promise<Course> {

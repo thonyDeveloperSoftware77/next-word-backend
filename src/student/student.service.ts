@@ -5,12 +5,18 @@ import { Student } from "./entities/student.entity";
 import { Repository } from "typeorm";
 import { ConflictException, Injectable } from "@nestjs/common";
 import { FirebaseRepository } from "src/firebase/firebase.service";
+import { Course } from "src/course/entities/course.entity";
+import { StudentCourse } from "./entities/courseStudent.entity";
 
 @Injectable()
 export class StudentService {
     constructor(
         @InjectRepository(Student)
         private studentRepository: Repository<Student>,
+        @InjectRepository(Course)
+        private courseRepository: Repository<Course>,
+        @InjectRepository(StudentCourse)
+        private courseStudentRepository: Repository<StudentCourse>,
         private firebaseRepository: FirebaseRepository
     ) { }
 
@@ -18,7 +24,7 @@ export class StudentService {
         return this.studentRepository.find();
     }
 
-    async finAllByCourse(uid: string): Promise<Student[]> { 
+    async finAllByCourse(uid: string): Promise<Student[]> {
         const students = await this.studentRepository.createQueryBuilder('student')
             .innerJoin('student.course', 'course', 'course.uid = :uid', { uid })
             .getMany();
@@ -30,6 +36,8 @@ export class StudentService {
     }
 
     async findOne(uid: string): Promise<Student> {
+        console.log('uid', uid);
+        console.log('llego');
         const student = await this.studentRepository.findOne({ where: { uid } });
         if (!student) {
             throw new ConflictException('Este estudiante no existe');
@@ -65,6 +73,7 @@ export class StudentService {
             const userRecord = await this.firebaseRepository.createUser({
                 email: student.email,
                 password: student.password,
+                role: 'student',
             });
             // Se accede al uid del usuario recién creado
             student.uid = userRecord.uid;
@@ -78,6 +87,46 @@ export class StudentService {
         }
     }
 
+
+    //async getStudentCourses(uid: string): Promise<Course[]> {
+    //    const studentCourses : StudentCourse =  await  this.courseStudentRepository.findOne({ where: { uid } });
+    //    if (!studentCourses) {
+    //        throw new ConflictException('Este estudiante no tiene cursos');
+    //    }
+//
+//
+    //}
+
+    async createStudentCourse(uid: string, course_id: number): Promise<StudentCourse> {
+        const student = await this.studentRepository.findOne({ where: { uid } });
+        if (!student) {
+            throw new ConflictException('Este estudiante no existe');
+        }
+
+        //verifica que exista el curso
+        const course = await this.courseRepository.findOne({ where: { id: course_id } });
+        if (!course) {
+            throw new ConflictException('Este curso no existe');
+        }
+
+        //verifica si ya esta inscrito en algun otro curso, solo puede haber un registro por estudiante
+        const existingCourse = await this.courseStudentRepository.findOne({ where: { uid: uid } });
+        if (existingCourse) {
+            throw new ConflictException('Este estudiante ya está inscrito en otro curso');
+        }   
+
+        const courseStudent = new StudentCourse();
+        courseStudent.student = student;
+        courseStudent.course_id = course_id;
+        courseStudent.status = 1;
+
+        try {
+            return this.courseStudentRepository.save(courseStudent);
+        } catch (error) {
+            throw new ConflictException('Error al inscribir el estudiante en el curso');
+        }
+    }
+
     async update(uid: string, name: string): Promise<Student> {
         const student = await this.studentRepository.findOne({ where: { uid } });
         if (!student) {
@@ -86,4 +135,6 @@ export class StudentService {
         student.name = name;
         return this.studentRepository.save(student);
     }
+
+
 }

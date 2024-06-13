@@ -64,6 +64,7 @@ export class TeacherService {
             const userRecord = await this.firebaseRepository.createUser({
                 email: teacher.email,
                 password: teacher.password,
+                role: 'teacher',
             });
             // Se accede al uid del usuario recién creado
             teacher.uid = userRecord.uid;
