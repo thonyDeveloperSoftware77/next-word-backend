@@ -137,16 +137,26 @@ export class LearnService {
 
     // Función para calcular los promedios del curso
     calcularPromediosCurso(cursos: any[], progresoEstudiantes: { [key: string]: any }): { [key: number]: any } {
+        // Inicializar un objeto para almacenar los promedios por curso
         const promediosCurso: { [key: number]: any } = {};
 
+        // Iterar sobre cada curso
         cursos.forEach(curso => {
+            // Filtrar los estudiantes que pertenecen al curso actual
             const estudiantesCurso = Object.values(progresoEstudiantes).filter(estudiante => estudiante.course_id === curso.id);
+
+            // Calcular el total de revisiones del curso usando reduce
             const totalRevisionesCurso = estudiantesCurso.reduce((acc, estudiante) => acc + estudiante.totalRevisiones, 0);
+            // Calcular el total de éxitos del curso usando reduce
             const totalExitosCurso = estudiantesCurso.reduce((acc, estudiante) => acc + estudiante.revisionesExitosas, 0);
+            // Calcular el total de fallos del curso usando reduce
             const totalFallosCurso = estudiantesCurso.reduce((acc, estudiante) => acc + estudiante.revisionesFallidas, 0);
+            // Calcular el total de tiempo de revisión del curso usando reduce
             const totalTiempoCurso = estudiantesCurso.reduce((acc, estudiante) => acc + estudiante.totalTiempo, 0);
+            // Obtener la cantidad de estudiantes en el curso
             const cantidadEstudiantesCurso = estudiantesCurso.length;
 
+            // Calcular los promedios y almacenarlos en el objeto promediosCurso
             promediosCurso[curso.id] = {
                 promedioRevisiones: cantidadEstudiantesCurso ? totalRevisionesCurso / cantidadEstudiantesCurso : 0,
                 promedioExitos: cantidadEstudiantesCurso ? totalExitosCurso / cantidadEstudiantesCurso : 0,
@@ -155,51 +165,103 @@ export class LearnService {
             };
         });
 
+        // Retornar el objeto con los promedios por curso
         return promediosCurso;
     }
 
 
 
 
-    generarRecomendaciones(uidsEstudiantes: string[], progresoEstudiantes: { [key: string]: any }, cursos: any[], promediosCurso: { [key: number]: any }): any[] {
-        return uidsEstudiantes.map(uidEstudiante => {
-            const idCurso = progresoEstudiantes[uidEstudiante]?.course_id;
-            if (!idCurso) return null;
+    /**
+     * Funcion para generar recomendaciones
+     * @param uidsEstudiantes 
+     * @param progresoEstudiantes 
+     * @param cursos 
+     * @param promediosCurso 
+     * @returns Promise<any[]>
+     */
+    async generarRecomendaciones(
+        uidsEstudiantes: string[],
+        progresoEstudiantes: { [key: string]: any },
+        cursos: any[],
+        promediosCurso: { [key: number]: any }
+    ): Promise<any[]> {
+        // Paso 1: Procesar cada estudiante utilizando Promise.all para manejar operaciones asíncronas
+        const recomendaciones = await Promise.all(
+            uidsEstudiantes.map(async (uidEstudiante) => {
+                // Paso 2: Obtener el curso asociado al estudiante
+                const idCurso = progresoEstudiantes[uidEstudiante]?.course_id;
+                if (!idCurso) return null;
 
-            const datosEstudiante = progresoEstudiantes[uidEstudiante];
-            const datosCurso = promediosCurso[idCurso] || {}; // Asegúrate de manejar casos donde datosCurso podría ser indefinido
-            let recomendacion = '';
-            let palabrasFallidasRecomendacion: any[] = [];
+                const datosEstudiante = progresoEstudiantes[uidEstudiante];
+                const datosCurso = promediosCurso[idCurso] || {}; // Asegurarse de manejar casos donde datosCurso podría ser indefinido
+                let recomendacion = '';
+                let palabrasFallidasRecomendacion: any[] = [];
+                let palabrasSinonimoRecomendacion: any[] = [];
 
-            const tasaExito = datosEstudiante.revisionesExitosas / (datosEstudiante.revisionesExitosas + datosEstudiante.revisionesFallidas);
-            const tasaFallo = datosEstudiante.revisionesFallidas / (datosEstudiante.revisionesExitosas + datosEstudiante.revisionesFallidas);
+                // Paso 3: Calcular tasas de éxito y fallo del estudiante
+                const tasaExito =
+                    datosEstudiante.revisionesExitosas /
+                    (datosEstudiante.revisionesExitosas + datosEstudiante.revisionesFallidas);
+                const tasaFallo =
+                    datosEstudiante.revisionesFallidas /
+                    (datosEstudiante.revisionesExitosas + datosEstudiante.revisionesFallidas);
 
-            // Umbral arbitrario del 90% de éxito para recomendar un curso más alto
-            if (tasaExito > 0.9) {
-                recomendacion = '✅Merecía estar en un curso más alto';
-            }
-            // Umbral arbitrario del 120% del promedio del curso para recomendar un nivel más alto
-            else if (tasaExito > datosCurso.promedioExitos / datosCurso.promedioRevisiones * 1.2) {
-                recomendacion = '✔️Recomendado para el siguiente nivel';
-            }
-            // Umbral arbitrario del 120% del promedio de fallos del curso para recomendar reforzamiento
-            else if (tasaFallo > datosCurso.promedioFallos / datosCurso.promedioRevisiones * 1.2) {
-                recomendacion = '❌Necesita refuerzo adicional';
-                palabrasFallidasRecomendacion = Object.keys(datosEstudiante.palabrasFallidas)
-                    .filter(palabra => (datosEstudiante.palabrasFallidas[palabra] > 2))
-                    .map(palabra => ({
-                        palabra,
-                        intentos: datosEstudiante.palabrasFallidas[palabra]
-                    }));
-            }
+                // Paso 4: Determinar la recomendación basada en las tasas de éxito y fallo
+                if (tasaExito > 0.9) {
+                    recomendacion = '✅Merecía estar en un curso más alto';
+                } else if (
+                    tasaExito >
+                    (datosCurso.promedioExitos / datosCurso.promedioRevisiones) * 1.2
+                ) {
+                    recomendacion = '✔️Recomendado para el siguiente nivel';
+                } else if (
+                    tasaFallo >
+                    (datosCurso.promedioFallos / datosCurso.promedioRevisiones) * 1.2
+                ) {
+                    recomendacion = '❌Necesita refuerzo adicional';
+                    // Paso 5: Identificar palabras fallidas y obtener sinónimos
+                    palabrasFallidasRecomendacion = Object.keys(
+                        datosEstudiante.palabrasFallidas
+                    )
+                        .filter((palabra) => datosEstudiante.palabrasFallidas[palabra] > 2)
+                        .map((palabra) => ({
+                            palabra,
+                            intentos: datosEstudiante.palabrasFallidas[palabra],
+                        }));
+                    palabrasSinonimoRecomendacion = await Promise.all(
+                        palabrasFallidasRecomendacion.map(async (palabra) => {
+                            const sinonimos = await this.obtenerSinonimos(palabra.palabra);
+                            return {
+                                palabra: palabra.palabra,
+                                sinonimos,
+                            };
+                        })
+                    );
+                }
 
-            return {
-                nombreEstudiante: datosEstudiante.nombre,
-                recomendacion,
-                palabrasFallidas: palabrasFallidasRecomendacion.length > 0 ? palabrasFallidasRecomendacion : undefined
-            };
-        }).filter(recomendacion => recomendacion !== null);
+
+                // Paso 6: Retornar el objeto de recomendación para el estudiante
+                return {
+                    nombreEstudiante: datosEstudiante.nombre,
+                    recomendacion,
+                    palabrasFallidas:
+                        palabrasFallidasRecomendacion.length > 0
+                            ? palabrasFallidasRecomendacion
+                            : undefined,
+                    palabrasSinonimo:
+                        palabrasSinonimoRecomendacion.length > 0
+                            ? palabrasSinonimoRecomendacion
+                            : undefined,
+                };
+            })
+        );
+
+        // Paso 7: Filtrar las recomendaciones nulas y retornarlas
+        return recomendaciones.filter((recomendacion) => recomendacion !== null);
     }
+
+
 
 
     // Función para agrupar resultados por curso
@@ -207,7 +269,7 @@ export class LearnService {
         return cursos.map(curso => {
             const estudiantesCurso = Object.values(progresoEstudiantes).filter(estudiante => estudiante.course_id === curso.id);
             const recomendacionesCurso = recomendaciones.filter(rec => estudiantesCurso.map(ec => ec.nombre).includes(rec.nombreEstudiante));
-    
+
             return {
                 curso: curso.name,
                 estudiantes: estudiantesCurso.map(estudiante => ({
@@ -227,196 +289,286 @@ export class LearnService {
             };
         });
     }
-    
-    
 
 
-  // Método para clasificar palabras por número de sílabas
-  clasificarPorSilabas(palabra: string): number {
-    console.log(palabra);
-
-    if (!palabra) return 0; // Asegura que la palabra no sea undefined
-    console.log(palabra.split(/[aeiouáéíóúü]/i).length - 1);
-    return palabra.split(/[aeiouáéíóúü]/i).length - 1;
-}
 
 
-calcularProgresoPorSilabas(historialesEstudiante: any[], todasTarjetas: any[]): any {
-    const progreso = {
-        monosilabas: { exitosas: 0, fallidas: 0 },
-        bisilabas: { exitosas: 0, fallidas: 0 },
-        trisilabas: { exitosas: 0, fallidas: 0 },
-        polisilabas: { exitosas: 0, fallidas: 0 }
-    };
+    // Método para clasificar palabras por número de sílabas
+    clasificarPorSilabas(palabra: string): number {
+        console.log(palabra);
 
-    historialesEstudiante.forEach(historial => {
-        const tarjeta = todasTarjetas.find(t => t.id === historial.card_id);
-        const numSilabas = this.clasificarPorSilabas(tarjeta ? tarjeta.word_english : "");
-        const categoria = numSilabas === 1 ? 'monosilabas' : numSilabas === 2 ? 'bisilabas' : numSilabas === 3 ? 'trisilabas' : 'polisilabas';
-
-        const historialesTarjeta = historialesEstudiante.filter(h => h.card_id === historial.card_id);
-        const conteoSesiones: { [key: number]: number } = {};
-
-        historialesTarjeta.forEach(h => {
-            if (!conteoSesiones[h.session_id]) {
-                conteoSesiones[h.session_id] = 0;
-            }
-            conteoSesiones[h.session_id]++;
-        });
-
-        const sesionesUnicas = Object.keys(conteoSesiones).length;
-        const intentosFallidos = Object.values(conteoSesiones).filter(count => count > 1).length;
-
-        console.log('Palabra:', tarjeta ? tarjeta.word_english : 'No encontrada', 'Número de sílabas:', numSilabas, 'Categoría:', categoria, 'Sesiones únicas:', sesionesUnicas, 'Intentos fallidos:', intentosFallidos);
-
-        if (sesionesUnicas === 4 && intentosFallidos === 0) {
-            progreso[categoria].exitosas++;
-        } else {
-            progreso[categoria].fallidas++;
-        }
-    });
-
-    console.log('Progreso por sílabas:', progreso);
-    return progreso;
-}
+        if (!palabra) return 0; // Asegura que la palabra no sea undefined
+        console.log(palabra.split(/[aeiouáéíóúü]/i).length - 1);
+        return palabra.split(/[aeiouáéíóúü]/i).length - 1;
+    }
 
 
-calcularProgresoEstudiantes(uidsEstudiantes: string[], nombresEstudiantes: { [key: string]: string }, todasTarjetas: any[], todosHistorialesRevisiones: any[], estudiantesEnCursos: any[]): { [key: string]: any } {
-    const progresoEstudiantes: { [key: string]: any } = {};
 
-    uidsEstudiantes.forEach(uidEstudiante => {
-        const historialesEstudiante = todosHistorialesRevisiones.filter(historial => historial.student_uid === uidEstudiante);
-        const tarjetasEstudiante = todasTarjetas.filter(tarjeta => historialesEstudiante.map(historial => historial.card_id).includes(tarjeta.id));
+    /**
+     * Calcular el progreso de un estudiante por número de sílabas
+     * @param historialesEstudiante 
+     * @param todasTarjetas 
+     * @returns 
+     */
+    calcularProgresoPorSilabas(historialesEstudiante: any[], todasTarjetas: any[]): any {
+        // Inicializar el objeto para almacenar el progreso por sílabas
+        const progreso = {
+            monosilabas: { exitosas: 0, fallidas: 0 },
+            bisilabas: { exitosas: 0, fallidas: 0 },
+            trisilabas: { exitosas: 0, fallidas: 0 },
+            polisilabas: { exitosas: 0, fallidas: 0 }
+        };
 
-        // Inicializar contadores
-        let totalRevisiones = 0;
-        let revisionesExitosas = 0;
-        let revisionesFallidas = 0;
-        const palabrasFallidas: { [key: string]: number } = {};
-        const fechasRevisiones = new Set<string>();
+        // Iterar sobre cada historial de revisión del estudiante
+        historialesEstudiante.forEach(historial => {
+            // Encontrar la tarjeta correspondiente al historial actual
+            const tarjeta = todasTarjetas.find(t => t.id === historial.card_id);
+            // Clasificar la palabra por número de sílabas
+            const numSilabas = this.clasificarPorSilabas(tarjeta ? tarjeta.word_english : "");
+            const categoria = numSilabas === 1 ? 'monosilabas' : numSilabas === 2 ? 'bisilabas' : numSilabas === 3 ? 'trisilabas' : 'polisilabas';
 
-        tarjetasEstudiante.forEach(tarjeta => {
-            const historialesTarjeta = historialesEstudiante.filter(historial => historial.card_id === tarjeta.id);
+            // Filtrar los historiales para la misma tarjeta
+            const historialesTarjeta = historialesEstudiante.filter(h => h.card_id === historial.card_id);
             const conteoSesiones: { [key: number]: number } = {};
 
-            historialesTarjeta.forEach(historial => {
-                fechasRevisiones.add(historial.revision_date.toISOString().split('T')[0]); // Guardar fechas únicas
-                if (!conteoSesiones[historial.session_id]) {
-                    conteoSesiones[historial.session_id] = 0;
+            // Contar las sesiones únicas y los intentos fallidos para la tarjeta
+            historialesTarjeta.forEach(h => {
+                if (!conteoSesiones[h.session_id]) {
+                    conteoSesiones[h.session_id] = 0;
                 }
-                conteoSesiones[historial.session_id]++;
+                conteoSesiones[h.session_id]++;
             });
 
             const sesionesUnicas = Object.keys(conteoSesiones).length;
             const intentosFallidos = Object.values(conteoSesiones).filter(count => count > 1).length;
 
+            // Determinar si la revisión fue exitosa o fallida
             if (sesionesUnicas === 4 && intentosFallidos === 0) {
-                revisionesExitosas++;
+                progreso[categoria].exitosas++;
             } else {
-                revisionesFallidas++;
-                if (intentosFallidos > 0) {
-                    palabrasFallidas[tarjeta.word_english] = intentosFallidos;
-                }
+                progreso[categoria].fallidas++;
             }
-
-            totalRevisiones += historialesTarjeta.length;
         });
 
-        const totalTiempo = fechasRevisiones.size; // Total de días únicos
+        // Retornar el progreso calculado por número de sílabas
+        return progreso;
+    }
 
-        const estudianteCurso = estudiantesEnCursos.find(sc => sc.uid === uidEstudiante);
-        const course_id = estudianteCurso ? estudianteCurso.course_id : null;
 
-        const progresoPorSilabas = this.calcularProgresoPorSilabas(historialesEstudiante, todasTarjetas); // Añadido el segundo parámetro
+    async obtenerSinonimos(palabra: string): Promise<string[]> {
+        try {
+            const response = await fetch(`https://api.datamuse.com/words?rel_syn=${palabra}`);
+            const data = await response.json();
+            return data.slice(0, 3).map((item: any) => item.word); // Tomar las 3 primeras palabras
+        } catch (error) {
+            console.error(`Error al obtener sinónimos para la palabra "${palabra}":`, error);
+            return [];
+        }
+    }
 
-        const evaluarPotencialConFrases = (exitosas: number, tipo: string): string[] => {
-            const frases: string[] = [];
-            if (exitosas > 10) {
-                if (tipo === 'monosílabas') {
-                    frases.push('Alta capacidad para memorizar y comprender palabras simples.');
-                } else if (tipo === 'bisílabas') {
-                    frases.push('Alta capacidad para procesar y recordar palabras de complejidad moderada.');
-                } else if (tipo === 'trisílabas') {
-                    frases.push('Alta capacidad para manejar y retener palabras más complejas.');
-                } else if (tipo === 'polisílabas') {
-                    frases.push('Alta capacidad para manejar y retener palabras muy complejas.');
+
+    async calcularProgresoEstudiantes(uidsEstudiantes: string[], nombresEstudiantes: { [key: string]: string }, todasTarjetas: any[], todosHistorialesRevisiones: any[], estudiantesEnCursos: any[]): Promise<{ [key: string]: any; }> {
+        const progresoEstudiantes: { [key: string]: any } = {};
+
+        uidsEstudiantes.forEach(uidEstudiante => {
+            const historialesEstudiante = todosHistorialesRevisiones.filter(historial => historial.student_uid === uidEstudiante);
+            const tarjetasEstudiante = todasTarjetas.filter(tarjeta => historialesEstudiante.map(historial => historial.card_id).includes(tarjeta.id));
+
+            // Inicializar contadores
+            let totalRevisiones = 0;
+            let revisionesExitosas = 0;
+            let revisionesFallidas = 0;
+            const palabrasFallidas: { [key: string]: number } = {};
+            const fechasRevisiones = new Set<string>();
+            const sinonimosPalabrasFallidas: { [key: string]: string[] } = {};
+
+
+            tarjetasEstudiante.forEach(async tarjeta => {
+                const historialesTarjeta = historialesEstudiante.filter(historial => historial.card_id === tarjeta.id);
+                const conteoSesiones: { [key: number]: number } = {};
+
+                historialesTarjeta.forEach(historial => {
+                    fechasRevisiones.add(historial.revision_date.toISOString().split('T')[0]); // Guardar fechas únicas
+                    if (!conteoSesiones[historial.session_id]) {
+                        conteoSesiones[historial.session_id] = 0;
+                    }
+                    conteoSesiones[historial.session_id]++;
+                });
+
+                const sesionesUnicas = Object.keys(conteoSesiones).length;
+                const intentosFallidos = Object.values(conteoSesiones).filter(count => count > 1).length;
+
+                if (sesionesUnicas === 4 && intentosFallidos === 0) {
+                    revisionesExitosas++;
+                } else {
+                    revisionesFallidas++;
+                    if (intentosFallidos > 0) {
+                        palabrasFallidas[tarjeta.word_english] = intentosFallidos;
+                    }
                 }
-            } else if (exitosas > 5) {
-                if (tipo === 'monosílabas') {
-                    frases.push('Capacidad intermedia para memorizar y comprender palabras simples.');
-                } else if (tipo === 'bisílabas') {
-                    frases.push('Capacidad intermedia para procesar y recordar palabras de complejidad moderada.');
-                } else if (tipo === 'trisílabas') {
-                    frases.push('Capacidad intermedia para manejar y retener palabras más complejas.');
-                } else if (tipo === 'polisílabas') {
-                    frases.push('Capacidad intermedia para manejar y retener palabras muy complejas.');
+
+                totalRevisiones += historialesTarjeta.length;
+            });
+
+            const totalTiempo = fechasRevisiones.size; // Total de días únicos
+
+            const estudianteCurso = estudiantesEnCursos.find(sc => sc.uid === uidEstudiante);
+            const course_id = estudianteCurso ? estudianteCurso.course_id : null;
+
+            const progresoPorSilabas = this.calcularProgresoPorSilabas(historialesEstudiante, todasTarjetas); // Añadido el segundo parámetro
+
+            const evaluarPotencialConFrases = (exitosas: number, tipo: string): string[] => {
+                const frases: string[] = [];
+                if (exitosas > 10) {
+                    if (tipo === 'monosílabas') {
+                        frases.push('Alta capacidad para memorizar y comprender palabras simples.');
+                    } else if (tipo === 'bisílabas') {
+                        frases.push('Alta capacidad para procesar y recordar palabras de complejidad moderada.');
+                    } else if (tipo === 'trisílabas') {
+                        frases.push('Alta capacidad para manejar y retener palabras más complejas.');
+                    } else if (tipo === 'polisílabas') {
+                        frases.push('Alta capacidad para manejar y retener palabras muy complejas.');
+                    }
+                } else if (exitosas > 5) {
+                    if (tipo === 'monosílabas') {
+                        frases.push('Capacidad intermedia para memorizar y comprender palabras simples.');
+                    } else if (tipo === 'bisílabas') {
+                        frases.push('Capacidad intermedia para procesar y recordar palabras de complejidad moderada.');
+                    } else if (tipo === 'trisílabas') {
+                        frases.push('Capacidad intermedia para manejar y retener palabras más complejas.');
+                    } else if (tipo === 'polisílabas') {
+                        frases.push('Capacidad intermedia para manejar y retener palabras muy complejas.');
+                    }
+                } else if (exitosas > 0) {
+                    if (tipo === 'monosílabas') {
+                        frases.push('Capacidad básica para memorizar y comprender palabras simples.');
+                    } else if (tipo === 'bisílabas') {
+                        frases.push('Capacidad básica para procesar y recordar palabras de complejidad moderada.');
+                    } else if (tipo === 'trisílabas') {
+                        frases.push('Capacidad básica para manejar y retener palabras más complejas.');
+                    } else if (tipo === 'polisílabas') {
+                        frases.push('Capacidad básica para manejar y retener palabras muy complejas.');
+                    }
                 }
-            } else if (exitosas > 0) {
-                if (tipo === 'monosílabas') {
-                    frases.push('Capacidad básica para memorizar y comprender palabras simples.');
-                } else if (tipo === 'bisílabas') {
-                    frases.push('Capacidad básica para procesar y recordar palabras de complejidad moderada.');
-                } else if (tipo === 'trisílabas') {
-                    frases.push('Capacidad básica para manejar y retener palabras más complejas.');
-                } else if (tipo === 'polisílabas') {
-                    frases.push('Capacidad básica para manejar y retener palabras muy complejas.');
+                return frases;
+            };
+
+            progresoEstudiantes[uidEstudiante] = {
+                nombre: nombresEstudiantes[uidEstudiante],
+                totalRevisiones,
+                revisionesExitosas,
+                revisionesFallidas,
+                totalTiempo,
+                palabrasFallidas,
+                sinonimosPalabrasFallidas,
+                progresoPorSilabas, // Añadir el progreso por sílabas al objeto de progreso del estudiante
+                course_id, // Asigna el course_id correcto para cada estudiante
+                potencial: {
+                    monosilabas: evaluarPotencialConFrases(progresoPorSilabas.monosilabas.exitosas, 'monosílabas'),
+                    bisilabas: evaluarPotencialConFrases(progresoPorSilabas.bisilabas.exitosas, 'bisílabas'),
+                    trisilabas: evaluarPotencialConFrases(progresoPorSilabas.trisilabas.exitosas, 'trisílabas'),
+                    polisilabas: evaluarPotencialConFrases(progresoPorSilabas.polisilabas.exitosas, 'polisílabas'),
                 }
-            }
-            return frases;
-        };
+            };
 
-        progresoEstudiantes[uidEstudiante] = {
-            nombre: nombresEstudiantes[uidEstudiante],
-            totalRevisiones,
-            revisionesExitosas,
-            revisionesFallidas,
-            totalTiempo,
-            palabrasFallidas,
-            progresoPorSilabas, // Añadir el progreso por sílabas al objeto de progreso del estudiante
-            course_id, // Asigna el course_id correcto para cada estudiante
-            potencial: {
-                monosilabas: evaluarPotencialConFrases(progresoPorSilabas.monosilabas.exitosas, 'monosílabas'),
-                bisilabas: evaluarPotencialConFrases(progresoPorSilabas.bisilabas.exitosas, 'bisílabas'),
-                trisilabas: evaluarPotencialConFrases(progresoPorSilabas.trisilabas.exitosas, 'trisílabas'),
-                polisilabas: evaluarPotencialConFrases(progresoPorSilabas.polisilabas.exitosas, 'polisílabas'),
-            }
-        };
+            console.log(`Progreso del estudiante ${uidEstudiante}:`, progresoEstudiantes[uidEstudiante]);
+        });
 
-        console.log(`Progreso del estudiante ${uidEstudiante}:`, progresoEstudiantes[uidEstudiante]);
-    });
-
-    return progresoEstudiantes;
-}
+        return progresoEstudiantes;
+    }
 
 
 
 
-// Refactorización final del método principal
-async reporteProgresoEstudiantes(uid_profesor: string): Promise<any> {
-    // Obtención de datos
-    const cursos = await this.obtenerCursos(uid_profesor);
-    if (cursos.length === 0) return [];
+    // Refactorización final del método principal
+    async reporteProgresoEstudiantes(uid_profesor: string): Promise<any> {
+        // Obtención de datos
+        const cursos = await this.obtenerCursos(uid_profesor);
+        if (cursos.length === 0) return [];
 
-    const estudiantesEnCursos = await this.obtenerEstudiantesEnCursos(cursos);
-    const uidsEstudiantes = estudiantesEnCursos.map(ec => ec.uid);
-    if (uidsEstudiantes.length === 0) return [];
+        const estudiantesEnCursos = await this.obtenerEstudiantesEnCursos(cursos);
+        const uidsEstudiantes = estudiantesEnCursos.map(ec => ec.uid);
+        if (uidsEstudiantes.length === 0) return [];
 
-    const nombresEstudiantes = await this.obtenerNombresEstudiantes(uidsEstudiantes);
-    const todasTarjetas = await this.obtenerTodasTarjetas(cursos);
-    if (todasTarjetas.length === 0) return [];
+        const nombresEstudiantes = await this.obtenerNombresEstudiantes(uidsEstudiantes);
+        const todasTarjetas = await this.obtenerTodasTarjetas(cursos);
+        if (todasTarjetas.length === 0) return [];
 
-    const todosHistorialesRevisiones = await this.obtenerTodosHistorialesRevisiones(todasTarjetas);
+        const todosHistorialesRevisiones = await this.obtenerTodosHistorialesRevisiones(todasTarjetas);
 
-    // Procesamiento de datos y cálculos de resultados
-    const progresoEstudiantes = this.calcularProgresoEstudiantes(uidsEstudiantes, nombresEstudiantes, todasTarjetas, todosHistorialesRevisiones, estudiantesEnCursos);
-    const promediosCurso = this.calcularPromediosCurso(cursos, progresoEstudiantes);
+        // Procesamiento de datos y cálculos de resultados
+        const progresoEstudiantes = await this.calcularProgresoEstudiantes(uidsEstudiantes, nombresEstudiantes, todasTarjetas, todosHistorialesRevisiones, estudiantesEnCursos);
+        const promediosCurso = this.calcularPromediosCurso(cursos, progresoEstudiantes);
 
-    const recomendaciones = this.generarRecomendaciones(uidsEstudiantes, progresoEstudiantes, cursos, promediosCurso);
+        const recomendaciones = await this.generarRecomendaciones(uidsEstudiantes, progresoEstudiantes, cursos, promediosCurso);
 
-    const resultados = this.agruparResultadosPorCurso(cursos, progresoEstudiantes, recomendaciones, promediosCurso);
+        const resultados = this.agruparResultadosPorCurso(cursos, progresoEstudiantes, await recomendaciones, promediosCurso);
 
-    return { resultados };
-}
+        return { resultados };
+    }
+
+
+    async comparationBetweenDates(uid_profesor: string, date1: string, date2: string): Promise<any> {
+        // OBTENCION DE LOS DATOS
+    
+        // DATA DE CURSOS DEL PROFESOR
+        const cursos = await this.obtenerCursos(uid_profesor);
+        if (cursos.length === 0) return [];
+    
+        // DATA DE ESTUDIANTES DE LOS CURSOS
+        const estudiantesEnCursos = await this.obtenerEstudiantesEnCursos(cursos);
+    
+        // UID ESTUDIANTES
+        const uidsEstudiantes = estudiantesEnCursos.map(ec => ec.uid);
+        if (uidsEstudiantes.length === 0) return [];
+    
+        // NOMBRES DE LOS ESTUDIANTES
+        const nombresEstudiantes = await this.obtenerNombresEstudiantes(uidsEstudiantes);
+    
+        // TODAS LAS TARJETAS DE LOS CURSOS
+        const todasTarjetas = await this.obtenerTodasTarjetas(cursos);
+        if (todasTarjetas.length === 0) return [];
+    
+        // HISTORIALES DE REVISIONES DE TARJETAS
+        const todosHistorialesRevisiones = await this.obtenerTodosHistorialesRevisiones(todasTarjetas);
+    
+        // FILTRAR HISTORIALES DE SESIONES DE ESTUDIO ENTRE LAS FECHAS DADAS
+        const historialesFiltrados = todosHistorialesRevisiones.filter(historial =>
+            new Date(historial.revision_date) >= new Date(date1) && new Date(historial.revision_date) <= new Date(date2)
+        );
+        
+        const progresoEstudiantes = uidsEstudiantes.map(uidEstudiante => {
+
+            // FILTRAR HISTORIALES DEL ESTUDIANTE
+            const historialesEstudiante = historialesFiltrados.filter(historial => historial.student_uid === uidEstudiante);
+
+            // OBTENER FECHAS UNICAS DE REVISIONES
+            const fechasRevisiones = new Set(historialesEstudiante.map(historial => historial.revision_date.toISOString()));
+    
+           // Encontrar el curso del estudiante
+            const estudianteCurso = estudiantesEnCursos.find(sc => sc.uid === uidEstudiante);
+            const course_name = cursos.find(curso => curso.id === estudianteCurso.course_id)?.name;
+    
+            return {
+                nombre: nombresEstudiantes[uidEstudiante],
+                totalFechasRevisiones: fechasRevisiones.size,
+                course_name: course_name,
+                fechasRevisiones: Array.from(fechasRevisiones).sort()
+            };
+        });
+    
+        // Obtener el máximo número de fechas de revisión
+        const maxFechasRevisiones = Math.max(...progresoEstudiantes.map(est => est.totalFechasRevisiones));
+    
+        // Filtrar los estudiantes que tienen el máximo número de fechas de revisión
+        const estudiantesMaxRevisiones = progresoEstudiantes.filter(est => est.totalFechasRevisiones === maxFechasRevisiones);
+    
 
     
+        return estudiantesMaxRevisiones;
+    }
+    
+
+
+
 }

@@ -7,7 +7,7 @@ import { LearningHistory } from "./entity/learnHistory.entity";
 //import { User } from "src/firebase/user.decorator";
 
 @Controller('learn')
-export class LarnController{
+export class LarnController {
     constructor(
         private readonly learnService: LearnService,
     ) { }
@@ -15,12 +15,12 @@ export class LarnController{
 
     @Get('/prepare')
     getCardsPreparedForLearning(
-       // @User() user,
-       // @Body('course_id') course_id: number
+        // @User() user,
+        // @Body('course_id') course_id: number
 
     ): Promise<Card[]> {
         return this.learnService.getCardsPreparedForLearning(
-           'zNAXym25jVbmySIJvRCwJ8BVA1F3',
+            'zNAXym25jVbmySIJvRCwJ8BVA1F3',
             13
         );
     }
@@ -46,6 +46,16 @@ export class LarnController{
     ): Promise<any> {
         console.log("compareLearningRateBetweenStudents");
         return this.learnService.reporteProgresoEstudiantes("03rwifXks3MG7M4nkYbJ1ItGtFm2");
+    }
+
+    @Post('/comparationBetweenDates')
+    comparationBetweenDates(
+        // @User() user,
+        @Body('date1') date1: string,
+        @Body('date2') date2: string
+    ): Promise<any> {
+        console.log("comparationBetweenDates");
+        return this.learnService.comparationBetweenDates("03rwifXks3MG7M4nkYbJ1ItGtFm2", date1, date2);
     }
 
 }
