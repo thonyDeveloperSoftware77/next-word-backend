@@ -11,6 +11,8 @@ import { StudentModule } from './student/student.module';
 import { CardModule } from './card/card.module';
 import { CardSimilarModule } from './card_simility/card.module';
 import { LearnModule } from './learn/learn.module';
+import { AuthModule } from './auth/auth.modulte';
+import { EncryptService } from './auth/encrypt.service';
 
 @Module({
   imports: [
@@ -22,24 +24,23 @@ import { LearnModule } from './learn/learn.module';
     CardSimilarModule,
     VerifyModule,
     LearnModule,
+    AuthModule,
+    
     ConfigModule.forRoot({ cache: true }),
     TypeOrmModule.forRoot({
       type: 'postgres',
-      host: 'dpg-coul16ol6cac73b6bro0-a.oregon-postgres.render.com', // reemplaza con tu host
-      port: 5432, // reemplaza con tu puerto
-      username: 'nextwordbd_user', // reemplaza con tu nombre de usuario
-      password: '0HCo5GTKNY3DotBoN4HDeBATbXU9ZQ75', // reemplaza con tu contraseña
-      database: 'nextwordbd', // reemplaza con tu nombre de base de datos
-      entities: [__dirname + '/**/*.entity{.ts,.js}'],
-      synchronize: false, // establece en false para no sobrescribir las tablas existentes
-      ssl: true,
-      extra: {
-        ssl: {
-          rejectUnauthorized: false,
-        },
-      },
-    })],
+      host: 'localhost', // Dirección del servidor
+      port: 5432, // Puerto por defecto para PostgreSQL
+      username: 'postgres', // Usuario de PostgreSQL
+      password: 'admin', // Contraseña del usuario
+      database: 'NextWordBD', // Nombre de tu base de datos
+      entities: [__dirname + '/**/*.entity{.ts,.js}'], // Ubicación de las entidades
+      synchronize: false, // Mantén en false si no deseas modificar la estructura de tablas automáticamente
+      ssl: false, // Desactiva SSL para conexiones locales
+    }),
+    
+  ],
   controllers: [],
-  providers: [],
+  providers: [EncryptService],
 })
 export class AppModule { }

@@ -37,6 +37,7 @@ export class TeacherService {
 
     async create(user:string, teacher: Teacher): Promise<Teacher> {
         const uidAdmin = this.configService.get('USER_ADMIN_UID');
+        console.log(uidAdmin);
         if (user !== uidAdmin) {
             throw new ConflictException('No tienes permisos para realizar esta acción');
         }else{

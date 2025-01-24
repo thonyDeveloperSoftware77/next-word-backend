@@ -2,12 +2,40 @@
 import { Body, Controller, Get, Param, Post, Put } from "@nestjs/common";
 import { CardService } from "./card.service";
 import { Card } from "./entity/card.entity";
+import { EncryptService } from "src/auth/encrypt.service";
+import { HttpService } from "@nestjs/axios";
 
 @Controller('card')
 export class CardController {
     constructor(
         private readonly cardService: CardService,
+        private readonly encryptService: EncryptService,
+        private readonly httpService: HttpService, // Inyecta HttpService
+
     ) { }
+
+    //Ejemplo
+    @Get('/test-vault')
+    async getText(): Promise<string> {
+        try {
+            const originalText = 'Hola';
+            console.log('Texto Original:', originalText);
+
+            // Encriptar el texto usando Vault
+            const encryptedText = await this.encryptService.encryptData(originalText);
+            console.log('Texto Encriptado:', encryptedText);
+
+            // Desencriptar el texto usando Vault
+            const decryptedText = await this.encryptService.decryptData(encryptedText);
+            console.log('Texto Desencriptado:', decryptedText);
+
+            // Retornar el texto desencriptado
+            return decryptedText;
+        } catch (error) {
+            console.error('Error en /test-vault:', error);
+            throw error; // Esto enviará una respuesta 500 automáticamente
+        }
+    }
 
     @Get()
     findAll(): Promise<Card[]> {
@@ -21,7 +49,7 @@ export class CardController {
 
     @Post()
     create(
-        @Body()card: Card): Promise<Card> {
+        @Body() card: Card): Promise<Card> {
         return this.cardService.create(card);
     }
 
@@ -29,6 +57,7 @@ export class CardController {
     createMany(@Body() card: Card[]): Promise<Card[]> {
         return this.cardService.createCards(card);
     }
+
 
     @Put('/:id')
     update(
@@ -52,4 +81,26 @@ export class CardController {
             Number(course_id),
         );
     }
+
+    @Get('/send-encrypted')
+    async sendEncryptedData(): Promise<string> {
+        try {
+            const originalText = 'Holaaa, esta es una prueba de encriptación.';
+            console.log('Texto Original:', originalText);
+
+            const encryptedText = await this.encryptService.encryptData(originalText);
+            console.log('Texto Encriptado:', encryptedText);
+
+            const response = await this.httpService.post('http://localhost:3002/api/receive-encrypted', {
+                ciphertext: encryptedText,
+            }).toPromise();
+
+            console.log('Respuesta de Aplicación B:', response.data);
+            return 'Datos encriptados enviados exitosamente.';
+        } catch (error) {
+            console.error('Error en /send-encrypted:', error.response?.data || error.message);
+            throw new Error('Error al enviar datos encriptados');
+        }
+    }
+
 }

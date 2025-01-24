@@ -9,7 +9,7 @@ import { Course } from "src/course/entities/course.entity";
 export class CardService {
     constructor(
         @InjectRepository(Card) private cardRepository: Repository<Card>,
-        @InjectRepository(Course) private courseRepository: Repository<Course>
+        @InjectRepository(Course) private courseRepository: Repository<Course>,
     ) { }
 
     /**

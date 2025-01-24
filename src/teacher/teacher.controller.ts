@@ -1,13 +1,13 @@
 /* eslint-disable prettier/prettier */
 // teacher.controller.ts
-import { Controller, Get, Post, Body, Param, Put,  UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Put, /*UseGuards*/ } from '@nestjs/common';
 import { TeacherService } from './teacher.service';
 import { Teacher } from './entities/teacher.entity';
-import { FirebaseGuard } from 'src/firebase/firebase.guard';
+//import { FirebaseGuard } from 'src/firebase/firebase.guard';
 import { User } from 'src/firebase/user.decorator';
 
 @Controller('teacher')
-@UseGuards(FirebaseGuard)
+//@UseGuards(FirebaseGuard)
 export class TeacherController {
   constructor(private readonly teacherService: TeacherService) { }
 
@@ -31,6 +31,8 @@ export class TeacherController {
   create(
     @User() user,
     @Body() teacher: Teacher): Promise<Teacher> {
-    return this.teacherService.create(user.uid, teacher);
+    console.log(user);
+    console.log(teacher);
+    return this.teacherService.create(user.uid.uid, teacher);
   }
 }

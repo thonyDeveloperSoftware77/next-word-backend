@@ -1,15 +1,17 @@
 /* eslint-disable prettier/prettier */
 
-import { Body, Controller, Delete, Get, Param, Post, Put, UseGuards } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Post, Put, UseGuards, /*UseGuards*/ } from "@nestjs/common";
 import { CourseService } from "./course.service";
 import { Course } from "./entities/course.entity";
 import { CourseStudent } from "./entities/course.student.entity";
 import { User } from "src/firebase/user.decorator";
-import { FirebaseGuard } from "src/firebase/firebase.guard";
+//import { JwtAuthGuard } from "src/auth/JwtAuthGuard.guard";
+//import { FirebaseGuard } from "src/firebase/firebase.guard";
 
 
 @Controller('course')
-@UseGuards(FirebaseGuard)
+//@UseGuards(FirebaseGuard)
+//@UseGuards(JwtAuthGuard)
 export class CourseController {
     constructor(private readonly courseService: CourseService) { }
 

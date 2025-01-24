@@ -21,6 +21,8 @@ export class FirebaseRepository {
         password: user.password,
       });
 
+      this.firebaseApp.auth()
+
       console.log('Successfully created new user:', userRecord.uid);
 
       // Asignar el rol al usuario

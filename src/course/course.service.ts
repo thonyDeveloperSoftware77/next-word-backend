@@ -105,7 +105,7 @@ export class CourseService {
 
             //Por el momento se establece el type en private
             course.type = 'private';
-
+            console.log(course);
             //Buscar el profesor por uid
             if (course.teacher_uid) {
                 const teacher = await this.teacherRepository.findOne({ where: { uid: course.teacher_uid } });
