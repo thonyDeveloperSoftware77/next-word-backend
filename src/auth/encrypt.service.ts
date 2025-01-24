@@ -6,7 +6,7 @@ import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class EncryptService {
-    private vaultClient: any; // Usar 'any' para evitar problemas de tipado
+    private vaultClient: any; 
 
     constructor(private configService: ConfigService) {
         this.vaultClient = vault({
